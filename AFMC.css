@@ -1,0 +1,317 @@
+/*############################# CONSTANTES ##############################*/
+:root {
+  --NEUTRAL_COLOR: rgb(92,97,101);
+  --COLD_COLOR1: rgb(19,123,135);
+  --COLD_COLOR2: rgb(50,179,200);
+  --WARM_COLOR: rgb(246,163,61);
+}
+
+
+/*################################ PAGES ################################*/
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/*################################ HEADER ################################*/
+#menu_home /*Bandeau du haut de la page*/
+{
+	background-color: var(--COLD_COLOR1);
+	padding: 10px;
+    border: 10px #1C1C1C;
+    margin: 0;
+    flex-wrap:nowrap;
+    display: flex;
+	align-items: center;
+}
+#header_txt_box /*Zone de text du bandeau du haut de la page*/
+{
+	background-color: var(--WARM_COLOR) ;
+	padding: 20px;
+    border: 0;
+    margin: 20px;
+    flex-wrap:nowrap;
+    border-radius: 30px;
+    color:rgb(28,28,28);
+}
+
+/*################################ CONTENU ################################*/
+/*################ MENU ################*/
+p.navigation_in /*Rectange de l'éléments du menu sur lequel on est*/ 
+{
+	background-color: var(--COLD_COLOR2) ;
+    padding: 10px;
+    font-weight: bold;
+}
+p.navigation_out  /*Rectange de chaque éléments du menu sur lequel on peut aller*/ 
+{
+	background-color: var(--NEUTRAL_COLOR);/*78,186,189*/
+    padding: 10px;
+}
+p.navigation_out:hover /*quand on passe la souris dessus*/
+{
+	background-color: var(--COLD_COLOR2) ;
+    padding: 10px;
+}
+p.navigation_out:active /*quand on a cliqué dessus (quand on est sur cet onglet)*/
+{
+	font-weight: bold;
+    padding: 10px; 
+}
+aside /*Pour mettre des ajouts au texte*/
+{
+	background-color: rgb(78,186,189);
+    border-radius: 30px;
+}
+a.nav{ /*Permet de modifier l'aspect des liens hypertext*/
+	text-decoration: none;
+	color:white;
+}
+/*################ CONTENU ################*/
+#conteneur /*Contenu de la page*/
+{
+	background-color: rgb(244,235,230) ;
+	display: flex;
+	flex-wrap:nowrap;
+	height: 100%;
+}
+section /*Zone de txt*/
+{
+	text-align: justify;
+	width: 800px;
+	border: 0;
+    border-radius: 30px;
+    margin: 50px; 
+    color:rgb(46,46,46);
+    margin-top:0.5em;
+}
+section.under_part/*Zone par diplome*/
+{
+	text-align: justify;
+	width: 750px;
+	border: 5px solid gray;
+    border-radius: 30px;
+    padding: 30px;
+    margin: 0px; 
+    color:rgb(46,46,46);
+	padding-top:0;
+}
+a.contenu{ /*Permet de modifier l'aspect des liens hypertext*/
+	text-decoration: underline;
+    color:black;
+    font-weight: bold;
+}
+h2.titre{
+	font-family: Gill Sans, serif;
+	color:grey;
+	font-size: 2.5em;
+	margin-left: 3em;
+	text-decoration:underline;
+	margin-bottom: 0.5em;
+	margin-top:0.5em;
+}
+/*######## formation ########*/
+.logo_ps/*Zone de image*/
+{
+    float:right;
+    margin:1em;
+    margin-top:2em;
+    margin-bottom:0em;
+    padding: 10xp;
+}
+.logo_uvsq/*Zone de image*/
+{
+    float:right;
+    margin:1em;
+    margin-top:0em;
+    margin-bottom:3em;
+    padding: 10xp;
+}
+.logo_cergy/*Zone de image*/
+{
+    float:right;
+    margin:1em;
+    margin-top:2em;
+    margin-bottom:0em;
+    padding: 10xp;
+}
+a.formation{ /*Permet de modifier l'aspect des liens hypertext*/
+	text-decoration: underline;
+    color:black;
+}
+#titre_formation{
+	padding: 5xp;
+	font-style:italic;
+}
+/*######## contact ########*/
+p.contact{
+	margin-left: 11em;
+}
+a.mail{ /*Permet de modifier l'aspect des liens hypertext*/
+    text-decoration: underline;
+    color:black;
+}
+/*######## expé pro ########*/
+section.pro_bio/*Zone bio*/
+{
+	width: 350px;
+    height: 350px;
+	border: 5px solid rgb(58,140,142);
+    padding: 0px;
+    margin: 10px; 
+    color:rgb(46,46,46);
+    border-radius: 0px;
+	float:left;
+	background-color: rgb(28,28,28);
+}
+section.pro_info/*Zone info*/
+{
+	width: 350px;
+    height: 350px;
+	border: 5px solid rgb(28,28,28);
+    padding: 0px;
+    margin: 10px; 
+    color:rgb(46,46,46);
+    border-radius: 0px;
+    float: right;
+    background-color:rgb(58,140,142);
+}
+section.text_pro/*zone de texte*/
+{
+	text-align: center;
+	width: 345px;
+	padding: 0px;
+	margin-left: auto;
+    margin-right: auto;
+    border:0;
+    margin-top: 80px; 
+}
+p.grande_maj_bio
+{
+	font-size:175%;
+	line-height:5%;
+	font-weight:bold;
+	margin-top:30px;
+	margin-bottom: 30px;
+	color:rgb(58,140,142);
+}
+p.petite_maj_bio
+{
+	font-variant: small-caps;
+	margin:0px;
+	font-size:100%;
+	color:rgb(58,140,142);
+}
+p.grande_maj_info
+{
+	font-size:175%;
+	line-height:5%;
+	font-weight:bold;
+	margin-top:30px;
+	margin-bottom: 30px;
+	color:rgb(28,28,28);
+}
+p.petite_maj_info
+{
+	font-variant: small-caps;
+	margin:0px;
+	font-size:100%;
+	color:rgb(28,28,28);
+}
+section.sous_pro_bio/*Bouton*/
+{
+	text-align: center;
+	width: 100px;
+    border:2px solid rgb(231,176,31);
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:80px;
+    font-weight:bold;
+    border-radius: 0px;
+    background-color: rgb(28,28,28); 
+}
+section.sous_pro_bio:hover/*Bouton dessus*/
+{
+	text-align: center;
+	width: 100px;
+    border:2px solid rgb(231,176,31);
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:80px;
+    font-weight:bold;
+    border-radius: 0px;
+    background-color: rgb(58,140,142); 
+}
+section.sous_pro_info/*Bouton*/
+{
+	text-align: center;
+	width: 100px;
+    border:2px solid rgb(231,176,31);
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:80px;
+    font-weight:bold;
+    border-radius: 0px;
+    background-color: rgb(58,140,142); 
+}
+section.sous_pro_info:hover/*Bouton dessus*/
+{
+	text-align: center;
+	width: 100px;
+    border:2px solid rgb(231,176,31);
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:80px;
+    font-weight:bold;
+    border-radius: 0px;
+    background-color: rgb(28,28,28); 
+}
+a.pro /*Permet de modifier l'aspect des liens hypertext*/
+{
+	text-decoration: none;
+	color:rgb(231,176,31);
+}
+/*######## expé pro bio ########*/
+#sous_titre_expe_pro_bio{
+	padding: 0xp;
+	font-style:italic;
+	 margin:0px;
+}
+h2.pro_bio{
+    margin:0px;
+    margin-top:10px;
+}
+a.pro_bio{ /*Permet de modifier l'aspect des liens hypertext*/
+	text-decoration: underline;
+    color:black;
+    padding: 0px;
+    margin:0px;
+}
+/*################################ FOOTERS ################################*/
+#footer_up /*Pied de page haut*/
+{
+	background-color: var(--WARM_COLOR) ;
+	padding: 0px;
+    border: 0px;
+    margin: 0;
+    flex-wrap:nowrap;
+}
+#footer_bottom /*Pied de page bas (image)*/
+{
+	background-color: #1C1C1C ;
+    flex-wrap:nowrap;
+}
+#footer_up_inside /*Zone de texte du pied de page haut*/
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

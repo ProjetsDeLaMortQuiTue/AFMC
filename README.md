@@ -1,6 +1,17 @@
 # AFMC
 Projet Prog Web
 
+**COMMENTAIRE ENTRE NOUS**
+Tu peux utilisé la page General_data.php pour commencer à mettre les données général si tu veux :) [Coralie]
+
+
+
+
+
+
+
+
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/CoralieRohmer/luna/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
