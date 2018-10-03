@@ -1,0 +1,23 @@
+Vos collaborateurs biologistes ont séquencé un nouveau génome de champignon 
+et souhaitent que vous conceviez un site web en interne afin de les aider à 
+analyser ces données.
+fonctions gène, comment ils sont orga, données stat, nb gène distribution, fonction des gènes etc
+et la façon dont on peut interroger les données, de les stocker faire des réqu^etes. Stocker les
+données. Utilisation d'outil externe (kegg?) autorisé.
+
+
+File Descriptions
+
+Assembly files:
+File Name				File Description
+contigs.fasta		Nucleotide sequence by contig.
+
+Annotation files:
+File Name	 File Description
+genes.fasta			Nucleotide sequence of gene predictions, including untranslated regions. (one entry per gene)
+transcripts.fasta					 Nucleotide sequence of transcripts, with all non-coding sequences removed. (may be more than one transcript per gene)
+proteins.fasta						 Amino acid sequence of proteins predicted to be encoded by the transcripts. (may be more than one protein per gene)
+
+genome_summary.txt								 Feature file for each gene of gene coordinates and associated PFAM/TIGRfam annotations (one line per annotation).
+genome_summary_per_gene.txt				 Feature file for each gene of gene coordinates and associated PFAM/TIGRfam annotations (one line per gene).
+pfam_to_genes.txt									 PFAM domains mapped to predicted proteins by Hmmer.
