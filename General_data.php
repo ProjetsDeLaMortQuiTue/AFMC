@@ -5,6 +5,7 @@
 <!-- Récupére l'organisme depuis la page home ou la variable de session -->
 <?php
 	session_start();
+	$_SESSION['currentPage']="general_data";
 	if ((isset($_POST['orga'])) && ($_POST['orga'] != '')){
 	$orga=$_POST['orga'];
 	$_SESSION['orga'] = $orga;
@@ -22,24 +23,7 @@
   </head>
   
   <body>
-	 <!-- Bandeau supérieur -->
-	 <div id="menu_home">
-			<p class="navigation_out">
-				<a href="Home.php" class="nav">Accueil</a><br>
-			</p>
-			<p class="navigation_in">
-				<a href="General_data.php" class="nav">Informations généraux</a><br>
-			</p>
-			<p class="navigation_out">
-				<a href="genes/Genes.php" class="nav">Gènes</a><br>
-			</p>
-			<p class="navigation_out">
-				<a href="proteines/Proteines.php" class="nav">Proteines</a><br>
-			</p>
-			<p class="navigation_out">
-				<a href="Contact.html" class="nav">Contact</a><br>
-			</p>
-	</div>
+	<?php include("Menu.php"); ?>
 	
 	<!-- Milieu de page -->
 	<div id="conteneur">
@@ -54,17 +38,7 @@
 		</section>
 	</div>
 	
-	<!-- Bandeau inférieur haut -->
-	<div id="footer_up">
-		<div id="footer_up_inside">
-		Créé par Marine & Coralie
-		</div>
-	</div>
-	
-	<!-- Bandeau inférieur bas -->
-	<div id="footer_bottom">
-		<img src="bioinformatic_heorin2.jpg" alt="Heorin"/>
-	</div>
+	<?php include("Footer.php"); ?>
 	
   </body>
 

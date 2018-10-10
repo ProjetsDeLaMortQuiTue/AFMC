@@ -41,6 +41,40 @@ body {
 
 /*################################ CONTENU ################################*/
 /*################ MENU ################*/
+nav /*Zone de menu glissante*/
+{
+	background-color: red;
+	width: 50%;
+	min-width:210px;
+	padding: 20px;
+	position:fixed;
+}
+gene_analysis_start/*Zone de menu*/
+{
+	background-color: red;
+	width: 50%;
+	padding: 20px;
+	position:fixed;
+}
+gene_not_analyzed/*Zone de menu*/
+{
+	text-align: justify;
+	background-color: yellow;
+	width: 800px;
+	border: 0;
+    border-radius: 30px;
+    margin: 50px; 
+    color:rgb(46,46,46);
+    margin-top:0.5em;
+}
+#side_barre /*Zone de menu*/
+{
+	background-color: rgb(58,140,142);
+	width: 210px;
+	min-width:210px;
+	padding: 20px;
+}
+
 p.navigation_in /*Rectange de l'éléments du menu sur lequel on est*/ 
 {
 	background-color: var(--COLD_COLOR2) ;
@@ -114,187 +148,7 @@ h2.titre{
 	margin-bottom: 0.5em;
 	margin-top:0.5em;
 }
-/*######## formation ########*/
-.logo_ps/*Zone de image*/
-{
-    float:right;
-    margin:1em;
-    margin-top:2em;
-    margin-bottom:0em;
-    padding: 10xp;
-}
-.logo_uvsq/*Zone de image*/
-{
-    float:right;
-    margin:1em;
-    margin-top:0em;
-    margin-bottom:3em;
-    padding: 10xp;
-}
-.logo_cergy/*Zone de image*/
-{
-    float:right;
-    margin:1em;
-    margin-top:2em;
-    margin-bottom:0em;
-    padding: 10xp;
-}
-a.formation{ /*Permet de modifier l'aspect des liens hypertext*/
-	text-decoration: underline;
-    color:black;
-}
-#titre_formation{
-	padding: 5xp;
-	font-style:italic;
-}
-/*######## contact ########*/
-p.contact{
-	margin-left: 11em;
-}
-a.mail{ /*Permet de modifier l'aspect des liens hypertext*/
-    text-decoration: underline;
-    color:black;
-}
-/*######## expé pro ########*/
-section.pro_bio/*Zone bio*/
-{
-	width: 350px;
-    height: 350px;
-	border: 5px solid rgb(58,140,142);
-    padding: 0px;
-    margin: 10px; 
-    color:rgb(46,46,46);
-    border-radius: 0px;
-	float:left;
-	background-color: rgb(28,28,28);
-}
-section.pro_info/*Zone info*/
-{
-	width: 350px;
-    height: 350px;
-	border: 5px solid rgb(28,28,28);
-    padding: 0px;
-    margin: 10px; 
-    color:rgb(46,46,46);
-    border-radius: 0px;
-    float: right;
-    background-color:rgb(58,140,142);
-}
-section.text_pro/*zone de texte*/
-{
-	text-align: center;
-	width: 345px;
-	padding: 0px;
-	margin-left: auto;
-    margin-right: auto;
-    border:0;
-    margin-top: 80px; 
-}
-p.grande_maj_bio
-{
-	font-size:175%;
-	line-height:5%;
-	font-weight:bold;
-	margin-top:30px;
-	margin-bottom: 30px;
-	color:rgb(58,140,142);
-}
-p.petite_maj_bio
-{
-	font-variant: small-caps;
-	margin:0px;
-	font-size:100%;
-	color:rgb(58,140,142);
-}
-p.grande_maj_info
-{
-	font-size:175%;
-	line-height:5%;
-	font-weight:bold;
-	margin-top:30px;
-	margin-bottom: 30px;
-	color:rgb(28,28,28);
-}
-p.petite_maj_info
-{
-	font-variant: small-caps;
-	margin:0px;
-	font-size:100%;
-	color:rgb(28,28,28);
-}
-section.sous_pro_bio/*Bouton*/
-{
-	text-align: center;
-	width: 100px;
-    border:2px solid rgb(231,176,31);
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:80px;
-    font-weight:bold;
-    border-radius: 0px;
-    background-color: rgb(28,28,28); 
-}
-section.sous_pro_bio:hover/*Bouton dessus*/
-{
-	text-align: center;
-	width: 100px;
-    border:2px solid rgb(231,176,31);
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:80px;
-    font-weight:bold;
-    border-radius: 0px;
-    background-color: rgb(58,140,142); 
-}
-section.sous_pro_info/*Bouton*/
-{
-	text-align: center;
-	width: 100px;
-    border:2px solid rgb(231,176,31);
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:80px;
-    font-weight:bold;
-    border-radius: 0px;
-    background-color: rgb(58,140,142); 
-}
-section.sous_pro_info:hover/*Bouton dessus*/
-{
-	text-align: center;
-	width: 100px;
-    border:2px solid rgb(231,176,31);
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:80px;
-    font-weight:bold;
-    border-radius: 0px;
-    background-color: rgb(28,28,28); 
-}
-a.pro /*Permet de modifier l'aspect des liens hypertext*/
-{
-	text-decoration: none;
-	color:rgb(231,176,31);
-}
-/*######## expé pro bio ########*/
-#sous_titre_expe_pro_bio{
-	padding: 0xp;
-	font-style:italic;
-	 margin:0px;
-}
-h2.pro_bio{
-    margin:0px;
-    margin-top:10px;
-}
-a.pro_bio{ /*Permet de modifier l'aspect des liens hypertext*/
-	text-decoration: underline;
-    color:black;
-    padding: 0px;
-    margin:0px;
-}
+
 /*################################ FOOTERS ################################*/
 #footer_up /*Pied de page haut*/
 {
