@@ -1,0 +1,9 @@
+Créer les bons format pour les données en lançant le script scriptFormat/run.sh
+
+Se connecter à Mysql (via interface: http://localhost/phpmyadmin, via terminal /opt/lampp/bin/mysql -u root)
+
+Créer la base de donnée AFMC (CREATE DATABASE AFMC; puis USE AFMC; pour le terminal)
+
+Exécuté le script BD.sql (copier-coller via interface, SOURCE /opt/lampp/htdocs/AFMC/BD.sql via le terminal)
+
+C'est fini :)
