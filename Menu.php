@@ -12,12 +12,16 @@
   	$navigation_genes="\"navigation_out\"";
   	$navigation_proteines="\"navigation_out\"";
   	$navigation_contact="\"navigation_out\"";
+  	$navigation_user="\"navigation_out\"";
 
   	$home_path="Home.php";
   	$general_data_path="General_data.php";
   	$genes_path="genes/Genes.php";
   	$proteines_path="proteines/Proteines.php";
   	$contact_path="Contact.php";
+  	$logIn_path="user/LogIn.php";
+  	$user_path="user/HomeUser.php";
+
 
   	//Si la variable globale contenant le nom de la page courante existe
 	if ((isset($_SESSION['currentPage'])) && ($_SESSION['currentPage'] != '')){
@@ -38,6 +42,8 @@
 				  	$genes_path="Genes.php";
 				  	$proteines_path="../proteines/Proteines.php";
 				  	$contact_path="../Contact.php";
+				  	$logIn_path="../user/LogIn.php";
+  					$user_path="../user/HomeUser.php";
 				}
 				//Si la page courante est la page des proteines
 				else if ($currentPage==="proteines"){
@@ -47,11 +53,24 @@
 					  	$genes_path="../genes/Genes.php";
 					  	$proteines_path="Proteines.php";
 					  	$contact_path="../Contact.php";
+					  	$logIn_path="../user/LogIn.php";
+	  					$user_path="../user/HomeUser.php";
 					}
 					//Si la page courante est la page de contact
 					else if ($currentPage==="contact"){
 							$navigation_contact="\"navigation_in\"";
 						}
+						//Si la page courante est la page pour l'utilisateur
+						else if ($currentPage==="user"){
+								$navigation_user="\"navigation_in\"";
+								$home_path="../Home.php";
+							  	$general_data_path="../General_data.php";
+							  	$genes_path="../genes/Genes.php";
+							  	$proteines_path="../proteines/Proteines.php";
+							  	$contact_path="../Contact.php";
+							  	$logIn_path="LogIn.php";
+			  					$user_path="HomeUser.php";
+							}
 	}
 	if ((isset($_SESSION['orga'])) && ($_SESSION['orga'] != '')){
 		$orga=$_SESSION['orga'];
@@ -80,6 +99,18 @@
 						<a href=\"$contact_path\" class=\"nav\">Contact</a><br>
 					</p>";
 			}
+			if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
+				$user=$_SESSION['user'];
+				echo "<p class=$navigation_user>
+						<a href=\"$user_path\" class=\"nav\">$user</a><br>
+					</p>";
+			}
+			else{
+			echo "<p class=$navigation_user>
+						<a href=\"$logIn_path\" class=\"nav\">Se connecter</a><br>
+			</p>";
+			}
+
 			?>
 	</div>
   </body>

@@ -29,13 +29,47 @@
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
+			<!-- Titre -->
 			<div id="header_txt_box">
 				<h2 class="titre">AFMC</h2>
 				L'Analyse Facile de Marine et Coralie<br>
 				<br>
 			</div>
-		L'organisme est <?php echo $orga;?>
-		</section>
+		<?php
+			try
+			{	//Connection à la base de donnée avec l'utilisateur afmc
+				$bdd = new PDO('mysql:host=localhost;dbname=AFMC;charset=utf8','afmc','marine&coralie');
+				
+			}
+			catch (Exception $e)
+			{
+		        	die('Erreur : ' . $e->getMessage());
+			}
+				//preparation de la requete sql
+				$answer = $bdd->prepare('SELECT nomEsp,nbContigs,nbGenes,nbPFAM,nbProts,nbTrans,pourcCodant,soucheEsp FROM Espece WHERE nomEsp = ?');
+				//execute la requête avec la variable passé en argument ($orga remplace ?)
+				$answer->execute(array($orga));
+		?>
+		        <TABLE>
+		<?php
+		        $i=0;
+		        //Affiche les resultats de la requête dans un tableau
+		        while ($data = $answer->fetch())
+		        {
+		            $i++;
+		            echo '<TR><TD>'.'Nom de l\'espece: '.'</TD><TD>'.$data['nomEsp'].'</TD></TR>'.
+		            '<TR><TD>'.'Nombres de contigues:  '.'</TD><TD>'.$data['nbContigs'].'</TD></TR>'.
+		            '<TR><TD>'.'Nombres de gènes: '.'</TD><TD>'.$data['nbGenes'].'</TD></TR>'.
+		            '<TR><TD>'.'Nombres de PFAM: '.'</TD><TD>'.$data['nbPFAM'].'</TD></TR>'.
+		            '<TR><TD>'.'Nombres de proteines: '.'</TD><TD>'.$data['nbProts'].'</TD></TR>'.
+		            '<TR><TD>'.'Nombres de transcrits: '.'</TD><TD>'.$data['nbTrans'].'</TD></TR>'.
+		            '<TR><TD>'.'Pourcentage codant: '.'</TD><TD>'.$data['pourcCodant'].'</TD></TR>'.
+		            '<TR><TD>'.'Souche de l\'espèce: '.'</TD><TD>'.$data['soucheEsp'].'</TD></TR>';
+		        }
+			$answer->closeCursor();
+		?>
+		        </TABLE>
+        </section>
 	</div>
 	
 	<?php include("Footer.php"); ?>

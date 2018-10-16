@@ -10,6 +10,12 @@
 	}
 else{$orga='INCONNU';}
 ?>
+
+<?php
+	if ((isset($_GET['prot'])) && ($_GET['prot'] != '')){
+	$prot = $_GET['prot'];
+	}
+?>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../AFMC.css"> 
@@ -18,8 +24,7 @@ else{$orga='INCONNU';}
   
   <body>
 	<?php include("../Menu.php"); ?>
-	
-	<!-- Milieu de page -->
+
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
@@ -39,23 +44,26 @@ else{$orga='INCONNU';}
 		        	die('Erreur : ' . $e->getMessage());
 			}
 				//preparation de la requete sql
-				$answer = $bdd->prepare('SELECT idProt FROM Proteine NATURAL JOIN Gene WHERE idEsp= ?');
-				//execute la requête avec la variable passé en argument ($orga remplace ?)
-				$answer->execute(array(1));
+				$answer = $bdd->prepare('SELECT idProt,nomProt,tailleProt,seqProt,idGene FROM Proteine WHERE idProt = ?');
+				$answer->execute(array($prot));
 		?>
 		        <TABLE>
 		<?php
-		        $i=0;
-		        //Affiche les resultats de la requête dans un tableau
-		        while ($data = $answer->fetch())
-		        {
-		            $i++;
-		            echo '<TR><TD><a href=ProtSheet.php?prot='.$data['idProt'].' class=\"nav\">'.$data['idProt'].'</a><br></TD></TR>';
-		        }
+	        $i=0;
+	        //Affiche les resultats de la requête dans un tableau
+	        while ($data = $answer->fetch())
+	        {
+	            $i++;
+	            echo '<TR><TD>'.'Identifiant de la proteine: '.'</TD><TD>'.$data['idProt'].'</TD></TR>'.
+	            '<TR><TD>'.'Nom:  '.'</TD><TD>'.$data['nomProt'].'</TD></TR>'.
+	            '<TR><TD>'.'Taille: '.'</TD><TD>'.$data['tailleProt'].'</TD></TR>'.
+	            '<TR><TD>'.'Sequence: '.'</TD><TD>'.$data['seqProt'].'</TD></TR>'.
+	            '<TR><TD>'.'Gène associé: '.'</TS><TD><a href=../genes/GeneSheet.php?gene='.$data['idGene'].' class=\"nav\">'.$data['idGene'].'</a><br></TD></TR>';
+	        }
 			$answer->closeCursor();
 		?>
 		        </TABLE>
-		</section>
+        </section>
 	</div>
 	
 	<?php include("../Footer.php"); ?>

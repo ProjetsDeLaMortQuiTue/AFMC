@@ -2,8 +2,13 @@ Créer les bons format pour les données en lançant le script scriptFormat/run.
 
 Se connecter à Mysql (via interface: http://localhost/phpmyadmin, via terminal /opt/lampp/bin/mysql -u root)
 
-Créer la base de donnée AFMC (CREATE DATABASE AFMC; puis USE AFMC; pour le terminal)
+Créer la base de donnée AFMC
 
-Exécuté le script BD.sql (copier-coller via interface, SOURCE /opt/lampp/htdocs/AFMC/BD.sql via le terminal)
+Exécuté le script BD.sql
+
+Pour que le code s'effectue correctement:
+	Crée un utilisateur appelé afmc qui a pour mot de passe marine&coralie qui n'a de droit que sur les
+	données (pas la structure ni l'administation) et la bases de donnée AFMC (a modifier après la
+	création de l'utilisateur)
 
 C'est fini :)
