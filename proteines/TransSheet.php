@@ -12,8 +12,8 @@ else{$orga='INCONNU';}
 ?>
 
 <?php
-	if ((isset($_GET['prot'])) && ($_GET['prot'] != '')){
-	$prot = $_GET['prot'];
+	if ((isset($_GET['trans'])) && ($_GET['trans'] != '')){
+	$trans = $_GET['trans'];
 	}
 ?>
 <head>
@@ -44,8 +44,8 @@ else{$orga='INCONNU';}
 		        	die('Erreur : ' . $e->getMessage());
 			}
 				//preparation de la requete sql
-				$answer = $bdd->prepare('SELECT idProt,nomProt,tailleProt,seqProt,idGene FROM Proteine WHERE idProt = ?');
-				$answer->execute(array($prot));
+				$answer = $bdd->prepare('SELECT idTrans,nomTrans,tailleTrans,annotation,seqTrans FROM Transcript WHERE idTrans = ?');
+				$answer->execute(array($trans));
 		?>
 		        <TABLE>
 		<?php
@@ -54,17 +54,17 @@ else{$orga='INCONNU';}
 	        while ($data = $answer->fetch())
 	        {
 	            $i++;
-	            echo '<TR><TD>'.'Identifiant de la proteine: '.'</TD><TD>'.$data['idProt'].'</TD></TR>'.
-	            '<TR><TD>'.'Nom:  '.'</TD><TD>'.$data['nomProt'].'</TD></TR>'.
-	            '<TR><TD>'.'Taille: '.'</TD><TD>'.$data['tailleProt'].'</TD></TR>'.
-	            '<TR><TD>'.'Sequence: '.'</TD><TD>'.$data['seqProt'].'</TD></TR>'.
-	            '<TR><TD>'.'Gène associé: '.'</TS><TD><a href=../genes/GeneSheet.php?gene='.$data['idGene'].' class=\"nav\">'.$data['idGene'].'</a><br></TD></TR>';
+	            echo '<TR><TD>'.'Identifiant du trancript: '.'</TD><TD>'.$data['idTrans'].'</TD></TR>'.
+	            '<TR><TD>'.'Nom:  '.'</TD><TD>'.$data['nomTrans'].'</TD></TR>'.
+	            '<TR><TD>'.'Taille:  '.'</TD><TD>'.$data['tailleTrans'].'</TD></TR>'.
+	            '<TR><TD>'.'Annotation: '.'</TD><TD>'.$data['annotation'].'</TD></TR>'.
+	            '<TR><TD>'.'Sequence: '.'</TD><TD>'.$data['seqTrans'].'</TD></TR>';
 	        }
 			$answer->closeCursor();
 		?>
 		        </TABLE>
 		    <?php 
-				echo '<a href=TransSheet.php?trans='.$prot.' class=\"nav\">Voir le transcript'.'</a>';
+				echo '<a href=ProtSheet.php?prot='.$trans.' class=\"nav\">Voir la proteine'.'</a>';
 			?>
         </section>
 	</div>

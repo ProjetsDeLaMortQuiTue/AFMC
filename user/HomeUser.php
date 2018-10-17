@@ -8,10 +8,6 @@
 	if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
 	$user=$_SESSION['user'];
 	}
-	else{$user= $_POST["user"];
-		$_SESSION['user']=$user;
-		$mdp= $_POST["mdp"];
-	}
 ?>
 <head>
     <meta charset="UTF-8">

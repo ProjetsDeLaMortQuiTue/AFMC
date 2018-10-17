@@ -74,7 +74,7 @@
 	}
 	if ((isset($_SESSION['orga'])) && ($_SESSION['orga'] != '')){
 		$orga=$_SESSION['orga'];
-		}
+	}
 	?>
   
   <body>

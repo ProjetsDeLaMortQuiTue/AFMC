@@ -31,10 +31,10 @@ VALUES (1,'Botrytis Cinerea',4534,16448,42635,16448,16448,42,'B05.10');
 CREATE TABLE IF NOT EXISTS Contigue (
 	idContig CHAR(12) NOT NULL,
 	numContig SMALLINT,
-	numSuperContig DECIMAL(3,3),
-	debContig SMALLINT,
-	finContig SMALLINT,
-	tailleContig SMALLINT,
+	numSuperContig DECIMAL(5,3),
+	debContig INT,
+	finContig INT,
+	tailleContig INT,
 	seqContig TEXT,
 	idEsp SMALLINT UNSIGNED NOT NULL,
 	PRIMARY KEY (idContig),
@@ -52,11 +52,11 @@ LINES TERMINATED BY '\n';
 CREATE TABLE IF NOT EXISTS Gene (
 	idGene CHAR(10) NOT NULL,
 	nomProtGene VARCHAR(100),
-	tailleGene SMALLINT,
-	debGene SMALLINT,
-	finGene SMALLINT,
+	tailleGene INT,
+	debGene INT,
+	finGene INT,
 	brin CHAR(1),
-	numChromosome TINYINT UNSIGNED,
+	numChromosome INT UNSIGNED,
 	seqGene TEXT,
 	idEsp SMALLINT UNSIGNED NOT NULL,
 	PRIMARY KEY (idGene),
@@ -78,12 +78,12 @@ CREATE TABLE IF NOT EXISTS PFAM (
 	accPFAM CHAR(10),
 	nomPFAM VARCHAR(100),
 	description TEXT,
-	startPFAM SMALLINT UNSIGNED,
-	stopPFAM SMALLINT UNSIGNED,
-	taillePFAM SMALLINT UNSIGNED,
+	startPFAM INT UNSIGNED,
+	stopPFAM INT UNSIGNED,
+	taillePFAM INT UNSIGNED,
 	score VARCHAR(100),
 	PFAMattendu VARCHAR(100),
-	numSuperContig DECIMAL(3,3),
+	numSuperContig DECIMAL(5,3),
 	idGene CHAR(10) NOT NULL,
 
 	PRIMARY KEY (idPFAM),
@@ -93,9 +93,6 @@ CREATE TABLE IF NOT EXISTS PFAM (
         REFERENCES Gene(idGene)
 )
 ENGINE=INNODB;
-	--CONSTRAINT fk_idContigPFAM
-        --FOREIGN KEY (numSuperContig)
-        --REFERENCES Contigue(numSuperContig)
 
 LOAD DATA LOCAL INFILE '/opt/lampp/htdocs/AFMC/botrytis_cinerea/PFAM.csv'
 INTO TABLE PFAM
@@ -105,7 +102,7 @@ LINES TERMINATED BY '\n';
 CREATE TABLE IF NOT EXISTS Proteine (
 	idProt CHAR(10), 
 	nomProt VARCHAR(100),
-	tailleProt SMALLINT UNSIGNED,
+	tailleProt INT UNSIGNED,
 	seqProt TEXT,
 	idGene CHAR(10) NOT NULL,
 
@@ -119,11 +116,12 @@ ENGINE=INNODB;
 LOAD DATA LOCAL INFILE '/opt/lampp/htdocs/AFMC/botrytis_cinerea/prot.csv'
 INTO TABLE Proteine
 FIELDS TERMINATED BY ';' ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n',
 
 CREATE TABLE IF NOT EXISTS Transcript (
 	idTrans CHAR(10), 
 	nomTrans VARCHAR(100),
+	tailleTrans INT,
 	annotation TEXT,
 	seqTrans TEXT,
 
