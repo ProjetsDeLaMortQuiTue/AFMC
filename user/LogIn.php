@@ -34,12 +34,18 @@ else{$orga='INCONNU';}
 	        		$mdp=$data['mdp'];
 					if ((isset($_POST['mdp'])) && ($_POST['mdp'] == $mdp)){
 						$_SESSION['user']=$data['alias'];
+						$alias=$data['alias'];
+						$date=date("Y-m-d H:i:s");
+						$modification = $bdd->prepare('UPDATE User SET dateDerniereCo=? WHERE alias=?');
+						$modification->execute(array($date,$alias));
+						$modification->closeCursor();
 						echo "<meta http-equiv=\"Refresh\" content=\"0;url=HomeUser.php\">";
 					}
 					else{$erreur= "Le mot de passe est incorrecte";}
 				}
 				else{$erreur="L'identifiant est incorrecte";}
 		}
+		$answer->closeCursor();
 	}
 ?>
 <head>
@@ -60,15 +66,17 @@ else{$orga='INCONNU';}
 				<br>
 			</div>
 		<?php echo $erreur?>
+		<TABLE>
 		<form action='LogIn.php' method="post">
-			Identifiant: <input type="text" name="id"><br>
-			Mot de passe: <input type="password" name="mdp"><br>
-		<input type="submit" value="Se connecter">
-		</form>
+			<TR><TD>Identifiant: </TD><TD><input type="text" name="id"></TD></TR>
+			<TR><TD>Mot de passe:  </TD><TD><input type="password" name="mdp"></TD></TR>
+			<TR><TD></TD><TD><input type="submit" value="Se connecter">
+		<a href='ForgottenPassword.php' class=\"nav\">Mot de pass oublié?</a><br></TD></TR>
+		</TABLE>
 		<br><br>
 		Vous n'avez pas de compte?<br>
 		<form action='SignUp.php' method="post">
-		<input type="submit" value="Se crée un compte">
+			<input type="submit" value="Se crée un compte">
 		</form>
         </section>
 	</div>

@@ -7,6 +7,4 @@
 ./formatPFAM.pl ../botrytis_cinerea/botrytis_cinerea__b05.10__1_pfam_to_genes.txt
 ./formatProt.pl ../botrytis_cinerea/botrytis_cinerea__b05.10__1_proteins.fasta
 ./formatTrans.pl ../botrytis_cinerea/botrytis_cinerea__b05.10__1_transcripts.fasta
-
-
-
+./formatSuperContig.sh

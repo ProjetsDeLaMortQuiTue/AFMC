@@ -116,7 +116,7 @@ ENGINE=INNODB;
 LOAD DATA LOCAL INFILE '/opt/lampp/htdocs/AFMC/botrytis_cinerea/prot.csv'
 INTO TABLE Proteine
 FIELDS TERMINATED BY ';' ENCLOSED BY '"'
-LINES TERMINATED BY '\n',
+LINES TERMINATED BY '\n';
 
 CREATE TABLE IF NOT EXISTS Transcript (
 	idTrans CHAR(10), 
@@ -124,7 +124,6 @@ CREATE TABLE IF NOT EXISTS Transcript (
 	tailleTrans INT,
 	annotation TEXT,
 	seqTrans TEXT,
-
 	PRIMARY KEY (idTrans),
 	CONSTRAINT fk_idProtTrans
         FOREIGN KEY (idTrans)
@@ -142,20 +141,21 @@ CREATE TABLE IF NOT EXISTS User (
 	alias VARCHAR(100),
 	mdp VARCHAR(100) not null,
 	email VARCHAR(100) not null,
+	civilite varchar(4),
 	nom VARCHAR(50),
 	prenom VARCHAR(50),
 	nomLabo VARCHAR(100),
+	dateDeCreation DATE,
+	dateDerniereCo DATETIME,
 
 	PRIMARY KEY (idUser)
 )
 ENGINE=INNODB;
 
 INSERT INTO User
-VALUES (1,'MeilleurWebmaster','topmoumoute','coralie.rohmer@hotmail.fr','Rohmer','Coralie','CD Projekt RED');
-INSERT INTO User
-VALUES (2,'RootSuprem','coralieestlameilleur','marine.aglave@u-psud.fr','Aglave','Marine','Institut Pasteur');
-INSERT INTO User
-VALUES (3,'Nirvana','chatsupersympa','coralie.rohmer@u-psud.fr','Monsieur','leChat','Institut Félin du Siam');
+VALUES (1,'MeilleurWebmaster','topmoumoute','coralie.rohmer@hotmail.fr','Mlle','Rohmer','Coralie','CD Projekt RED','2018-09-15','2018-09-16 20:00:00'),
+(2,'RootSuprem','coralieestlameilleur','marine.aglave@u-psud.fr','Mme','Aglave','Marine','Institut Pasteur','2018-09-15','2018-09-16 20:00:00'),
+(3,'Nirvana','chatsupersympa','coralie.rohmer@u-psud.fr','M.','Monsieur','leChat','Institut Félin du Siam','2018-09-15','2018-09-16 20:00:00');
 
 CREATE TABLE IF NOT EXISTS Phylogenie(
 	idGene CHAR(10),

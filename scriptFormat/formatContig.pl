@@ -14,7 +14,7 @@ while (<IN1>)
     if (/^>/)
     {
     	#Ecrit la sequence du contig dans le fichiers si elle existe
-    	print OUT ";\"$seq\";1\n" unless($seq eq "");
+    	print OUT ";\"$seq\";\n" unless($seq eq "");
     	#Split les informations
         ($id,$numCont,$numSuperCont,$positions,$nbN)=split(/ \| /,$_);
         #Traite les informations
@@ -36,6 +36,6 @@ while (<IN1>)
         $seq.=$_
     }
 }
-print OUT ";\"$seq\";1";
+print OUT ";\"$seq\";";
 close IN1;
 print "Le nombre de contig est de: $compteur\n";

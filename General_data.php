@@ -46,17 +46,16 @@
 		        	die('Erreur : ' . $e->getMessage());
 			}
 				//preparation de la requete sql
-				$answer = $bdd->prepare('SELECT nomEsp,nbContigs,nbGenes,nbPFAM,nbProts,nbTrans,pourcCodant,soucheEsp FROM Espece WHERE nomEsp = ?');
-				//execute la requête avec la variable passé en argument ($orga remplace ?)
-				$answer->execute(array($orga));
+				$answerEspece = $bdd->prepare('SELECT nomEsp,nbContigs,nbGenes,nbPFAM,nbProts,nbTrans,pourcCodant,soucheEsp FROM Espece WHERE nomEsp = ?');
+				$answerEspece->execute(array($orga));
+				$answerContigue = $bdd->prepare('SELECT DISTINCT numSuperContig FROM Espece NATURAL JOIN Contigue WHERE nomEsp = ?');
+				$answerContigue->execute(array($orga));
 		?>
 		        <TABLE>
 		<?php
-		        $i=0;
 		        //Affiche les resultats de la requête dans un tableau
-		        while ($data = $answer->fetch())
+		        while ($data = $answerEspece->fetch())
 		        {
-		            $i++;
 		            echo '<TR><TD>'.'Nom de l\'espece: '.'</TD><TD>'.$data['nomEsp'].'</TD></TR>'.
 		            '<TR><TD>'.'Nombres de contigues:  '.'</TD><TD>'.$data['nbContigs'].'</TD></TR>'.
 		            '<TR><TD>'.'Nombres de gènes: '.'</TD><TD>'.$data['nbGenes'].'</TD></TR>'.
@@ -66,7 +65,13 @@
 		            '<TR><TD>'.'Pourcentage codant: '.'</TD><TD>'.$data['pourcCodant'].'</TD></TR>'.
 		            '<TR><TD>'.'Souche de l\'espèce: '.'</TD><TD>'.$data['soucheEsp'].'</TD></TR>';
 		        }
-			$answer->closeCursor();
+			$answerEspece->closeCursor();
+			echo "</TABLE>SuperContigue associé:<TABLE>";
+			while ($data = $answerContigue->fetch())
+		        {
+		            echo '<TR><TD>'.$data['numSuperContig']."</TD></TR>";
+		        }
+			$answerContigue->closeCursor();
 		?>
 		        </TABLE>
         </section>

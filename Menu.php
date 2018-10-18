@@ -72,9 +72,6 @@
 			  					$user_path="HomeUser.php";
 							}
 	}
-	if ((isset($_SESSION['orga'])) && ($_SESSION['orga'] != '')){
-		$orga=$_SESSION['orga'];
-	}
 	?>
   
   <body>
@@ -85,7 +82,8 @@
 			</p>
 			<!-- Affiche la suite du menu seulement si la page courante n'est pas l'accueil-->
 			<?php
-			if ($currentPage!="home"){
+			if ((isset($_SESSION['orga'])) && ($_SESSION['orga'] != '')){
+				$orga=$_SESSION['orga'];
 			echo "<p class=$navigation_general_data>
 						<a href=\"$general_data_path\" class=\"nav\">$orga</a><br>
 					</p>

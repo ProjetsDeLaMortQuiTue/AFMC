@@ -45,11 +45,9 @@ else{$orga='INCONNU';}
 		?>
 		        <TABLE>
 		<?php
-		        $i=0;
 		        //Affiche les resultats de la requête dans un tableau
 		        while ($data = $answer->fetch())
 		        {
-		            $i++;
 		            echo '<TR><TD><a href=ProtSheet.php?prot='.$data['idProt'].' class=\"nav\">'.$data['idProt'].'</a><br></TD></TR>';
 		        }
 			$answer->closeCursor();
