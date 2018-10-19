@@ -13,9 +13,9 @@
 	$Mademoiselle="";
 	$nom="";
 	$prenom="";
-	$nomLabo="Exemple:lri";
-	$_SESSION['currentPage']="user";
+	$nomLabo="exemple:lri";
 	session_start();
+	$_SESSION['currentPage']="user";
 	if (isset($_POST['id'])){
 		try
 		{	//Connection à la base de donnée avec l'utilisateur afmc
@@ -98,6 +98,11 @@
 		}
 
 		if($erreur==''){
+			$ajoutUtilisateur = $bdd->prepare('INSERT INTO User (alias,mdp,email,civilite,nom,prenom,nomLabo,dateDeCreation,dateDerniereCo)VALUES (?,?,?,?,?,?,?,?,?);');
+			$ajoutUtilisateur->execute(array($id,$mdp1,$email,$civilite,$nom,$prenom,$nomLabo,date("Y-m-d"),date("Y-m-d H:i:s")));
+			$ajoutUtilisateur->closeCursor();
+			$_SESSION['user']=$id;
+			echo "<meta http-equiv=\"Refresh\" content=\"0;url=HomeUser.php\">";
 			// $mail=mail( $email ,"Inscription au site AFMC" , string $message [, mixed $additional_headers [, string $additional_parameters ]] )
 			// if ($mail){$erreur='Un mail vous a été envoyé'}
 		}
@@ -133,7 +138,7 @@
 					<input type="radio" name="civilite" value="Mlle" <?php echo $Mademoiselle ?>/>Mlle
 					<input type="radio" name="civilite" value="Mme" <?php echo $Madame ?>/>Mme
 					<br></TD></TR>
-				<TR><TD>Nom:</TD><TD><input type="text" name="nom" default="coralie" value=<?php echo $nom ?>><br></TD></TR>
+				<TR><TD>Nom:</TD><TD><input type="text" name="nom" value=<?php echo $nom ?>><br></TD></TR>
 				<TR><TD>Prénom:</TD><TD><input type="text" name="prenom" value=<?php echo $prenom ?>><br></TD></TR>
 				<TR><TD>Nom de Labo:</TD><TD><input type="text" name="nomLabo" value=<?php echo $nomLabo ?>><br></TD></TR>
 			</TABLE>

@@ -44,11 +44,9 @@ else{$orga='INCONNU';}
 		?>
 		        <TABLE>
 		<?php
-		        $i=0;
 		        //Affiche les resultats de la requête dans un tableau
 		        while ($data = $answer->fetch())
 		        {
-		            $i++;
 		            echo '<TR><TD><a href=GeneSheet.php?gene='.$data['idGene'].' class=\"nav\">'.$data['idGene'].'</a><br></TD></TR>';
 		        }
 			$answer->closeCursor();

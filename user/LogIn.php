@@ -71,7 +71,8 @@ else{$orga='INCONNU';}
 			<TR><TD>Identifiant: </TD><TD><input type="text" name="id"></TD></TR>
 			<TR><TD>Mot de passe:  </TD><TD><input type="password" name="mdp"></TD></TR>
 			<TR><TD></TD><TD><input type="submit" value="Se connecter">
-		<a href='ForgottenPassword.php' class=\"nav\">Mot de pass oublié?</a><br></TD></TR>
+		<a href='ForgottenPassword.php'>Mot de pass oublié?</a><br></TD></TR>
+		</form>
 		</TABLE>
 		<br><br>
 		Vous n'avez pas de compte?<br>
