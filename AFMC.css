@@ -5,6 +5,11 @@
   --COLD_COLOR2: rgb(50,179,200);
   --WARM_COLOR: rgb(246,163,61);
 }
+red{color: red;}
+bleu{color: blue;}
+vert{color: green;}
+orange{color: rgb(228,140,26);}
+violet{color: rgb(142,51,206);}
 
 
 /*################################ PAGES ################################*/

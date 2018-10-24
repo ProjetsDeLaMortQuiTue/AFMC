@@ -74,7 +74,7 @@
 							  	$contact_path="../Contact.php";
 							  	$search_path="Search.php";
 							  	$logIn_path="../user/LogIn.php";
-			  					$user_path=".../user/HomeUser.php";
+			  					$user_path="../user/HomeUser.php";
 							}
 							//Si la page courante est la page pour l'utilisateur
 							else if ($currentPage=="user"){

@@ -41,13 +41,28 @@
 		    	$categorie=$_POST['categorie'];
 		    	//Recherche pour le GENE
 		    	if ($categorie=="Gene"){
-		    		echo '<form action=\'Search.php\' method="get"><TABLE>';
-		    		echo 'Formulaire à faire';
+		    		echo '<h1>Formulaire pour rechercher un gène</h1>';
+		    		echo '<form action=\'GeneResult.php\' method="get"><table style="text-align:JUSTIFY">';
+		    		echo '<TR><TD align=\'left\'>Identifiant</TD><TD><input type="text" name="id"></TD></TR>
+		    	<TR><TD>Fonction</TD><TD><input type="text" name="nomProt"></TD></TR>
+		    	<TR><TD>Taille entre </TD><TD  align="justify"><input size=4 type="text" name="taille1"> et <input size=4 type="text" name="taille2"></TD></TR>
+		    	<TR><TD>Brin </TD><TD>
+					<input type="radio" name="brin" value="-" />-
+					<input type="radio" name="brin" value="+" />+</TD></TR>
+		    	<TR><TD>N° du chromosome</TD><TD><input type="text" name="chromosome"></TD></TR>
+		    	<TR><TD>Proteine associé</TD><TD><input type="text" name="idProt"></TD></TR>
+		    	<TR><TD>Par motif sur la sequence</TD><TD><input type="text" name="motif"></TD><TD><a href=\'Regex.php\'>En savoir plus sur la syntax des motifs?</a></TD></TR>';
+
 
 		    	//Recherche pour la PROTEINE
 		    	}else if ($categorie=="Proteine") {
-		    		echo '<form action=\'Search.php\' method="get"><TABLE>';
-		    		echo 'Formulaire à faire';
+		    		echo '<h1>Formulaire pour rechercher une proteine</h1>';
+		    		echo '<form action=\'ProtResult.php\' method="get"><TABLE>';
+		    		echo '<TR><TD>Identifiant</TD><TD><input type="text" name="id"></TD></TR>
+		    	<TR><TD>Nom</TD><TD><input type="text" name="nomProt"></TD></TR>
+		    	<TR><TD>Taille entre </TD><TD  align="justify"><input size=4 type="text" name="taille1"> et <input size=4 type="text" name="taille2"></TD></TR>
+		    	<TR><TD>Gene associé</TD><TD><input type="text" name="idGene"></TD></TR>
+		    	<TR><TD>Par motif sur la sequence</TD><TD><input type="text" name="motif"></TD><TD><a href=\'Regex.php\'>En savoir plus sur la syntax des motifs?</a></TD></TR>';
 
 		    	//Recherche pour l'UTILISATEUR
 		    	}else{
