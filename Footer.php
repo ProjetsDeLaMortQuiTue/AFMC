@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Element pour page: Pied de page -->
 
 <html lang="fr">
   <head>
@@ -18,7 +19,6 @@
 	
 	<!-- Bandeau inférieur bas -->
 	<div id="footer_bottom">
-		<img src="bioinformatic_heorin2.jpg" alt="Heorin"/>
 	</div>
 	
   </body>

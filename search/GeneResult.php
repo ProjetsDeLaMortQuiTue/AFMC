@@ -103,11 +103,7 @@
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<div id="header_txt_box">
-				<h2 class="titre">AFMC</h2>
-				L'Analyse Facile de Marine et Coralie<br>
-				<br>
-			</div>
+			<?php include("../Title.php"); ?>
 			<?php
 			//Affiche le resultat de la requête (idGene+lien vers la page associé au gène)
 			while ($data = $answer->fetch())

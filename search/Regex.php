@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Page du tuto pour les expression régulière -->
 
 <html lang="fr">
   <head>
@@ -8,6 +9,7 @@
   </head>
   
   <?php session_start();$_SESSION['currentPage']="search"; ?>
+  
   <body>
 	<?php include("../Menu.php"); ?>
 	
@@ -15,11 +17,7 @@
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<div id="header_txt_box">
-				<h2 class="titre">AFMC</h2>
-				L'Analyse Facile de Marine et Coralie<br>
-				<br>
-			</div>
+			<?php include("../Title.php"); ?>
 			<h1>Expression régulière</h1>
 			Les expressions régulière permettent d'expliciter un motif avec des caractères particuliers: <br>
 			<table BORDER="1" style="text-align:center">

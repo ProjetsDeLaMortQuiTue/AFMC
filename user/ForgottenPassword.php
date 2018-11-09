@@ -69,11 +69,7 @@
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<div id="header_txt_box">
-				<h2 class="titre">AFMC</h2>
-				L'Analyse Facile de Marine et Coralie<br>
-				<br>
-			</div>
+			<?php include("../Title.php"); ?>
 		<TABLE>
 		<TR><TD></TD><TD><?php echo $erreurEmail?></TD></TR>
 		<form action='ForgottenPassword.php' method="post">

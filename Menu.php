@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Element pour page: Menu -->
 
 <html lang="fr">
   <head>
@@ -92,7 +93,6 @@
 	?>
   
   <body>
-	 <!-- Affiche le menu -->
 	 <div id="menu_home">
 			<p class=<?php echo $navigation_home ?> >
 				<a href="<?php echo $home_path ?>" class="nav">Accueil</a><br>
@@ -116,12 +116,16 @@
 										<p class=$navigation_contact>
 						<a href=\"$contact_path\" class=\"nav\">Contact</a><br>
 					</p>";
+
+			//Si un utilisateur est connecté, affiche le nom de l'utilisateur et un lien 
+			//vers le compte de l'utilisateur
 			if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
 				$user=$_SESSION['user'];
 				echo "<p class=$navigation_user>
 						<a href=\"$user_path\" class=\"nav\">$user</a><br>
 					</p>";
 			}
+			//Sinon un lien vers la page pour se connecter
 			else{
 			echo "<p class=$navigation_user>
 						<a href=\"$logIn_path\" class=\"nav\">Se connecter</a><br>

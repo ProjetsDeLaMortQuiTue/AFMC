@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Page d'accueil et choix de l'espèce -->
 
 <html lang="fr">
   <head>
@@ -8,6 +9,24 @@
   </head>
   
   <?php session_start();$_SESSION['currentPage']="home"; ?>
+  <?php
+		//CONSULTATION DE LA BASE DE DONNEE
+		include("DatabaseConnection.php");
+
+		//Requete sql pour les informations des espèces disponibles
+		$answer = $bdd->prepare('SELECT nomEsp FROM Espece');
+		$answer->execute();
+
+		//On récupére les espèces disponible dans un tableau
+		$organisms = array();
+		while ($data = $answer->fetch())
+	    {
+	        array_push($organisms,$data['nomEsp']);
+	    }
+		$answer->closeCursor();
+  ?>
+
+
   <body>
 	<?php include("Menu.php"); ?>
 	
@@ -15,15 +34,11 @@
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<div id="header_txt_box">
-				<h2 class="titre">AFMC</h2>
-				L'Analyse Facile de Marine et Coralie<br>
-				<br>
-			</div>
+			<?php include("Title.php"); ?>
 			<form action="General_data.php" method="POST">	
 					Choix de l'organisme:		
 					<?php
-						$organisms = ['Botrytis Cinerea'];
+						//Crée la liste pour sélectionné l'espèce et l'affiche
 						$liste = '<select size=1 name="orga">';
 						foreach($organisms as $organism){
 						    $liste .= '<option value="'.$organism.'">'.$organism.'</option>';

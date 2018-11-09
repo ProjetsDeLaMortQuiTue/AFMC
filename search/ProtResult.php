@@ -74,11 +74,7 @@
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<div id="header_txt_box">
-				<h2 class="titre">AFMC</h2>
-				L'Analyse Facile de Marine et Coralie<br>
-				<br>
-			</div>
+			<?php include("../Title.php"); ?>
 			<?php
 			//Affiche le resultat de la requête (idProt+lien vers la page associé à la proteine)
 			while ($data = $answer->fetch())

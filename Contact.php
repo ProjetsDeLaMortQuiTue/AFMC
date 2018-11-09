@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 
+<!-- Page pour contacter les webmasters de la page-->
+
+
 <html lang="fr">
   <head>
     <meta charset="UTF-8">
@@ -9,8 +12,8 @@
   
   <?php session_start();$_SESSION['currentPage']="contact"; ?>
   <body>
-	<?php include("Menu.php"); ?>
-	<?php include("Footer.php"); ?>
-	
+  	<?php include("Menu.php"); ?>
+    <?php include("Title.php"); ?>
+  	<?php include("Footer.php"); ?>
   </body>
 </html>

@@ -1,20 +1,17 @@
 <!DOCTYPE html>
+<!-- Page d'affichage des informations pour un transcript donnée -->
 
 <html lang="fr">
-<!-- Récupére l'organisme depuis la variable de session -->
+
 <?php
 	session_start();
 	$_SESSION['currentPage']="proteines";
-	if ((isset($_SESSION['orga'])) && ($_SESSION['orga'] != '')){
-	$orga=$_SESSION['orga'];
-	}
-else{$orga='INCONNU';}
-?>
 
-<?php
+	//Récupére le transcript
 	if ((isset($_GET['trans'])) && ($_GET['trans'] != '')){
 	$trans = $_GET['trans'];
 	}
+	else {$trans='INCONNU';}
 ?>
 <head>
     <meta charset="UTF-8">
@@ -28,32 +25,22 @@ else{$orga='INCONNU';}
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<div id="header_txt_box">
-				<h2 class="titre">AFMC</h2>
-				L'Analyse Facile de Marine et Coralie<br>
-				<br>
-			</div>
-		<?php
-			try
-			{	//Connection à la base de donnée avec l'utilisateur afmc
-				$bdd = new PDO('mysql:host=localhost;dbname=AFMC;charset=utf8','afmc','marine&coralie');
-				
-			}
-			catch (Exception $e)
-			{
-		        	die('Erreur : ' . $e->getMessage());
-			}
-				//preparation de la requete sql
-				$answer = $bdd->prepare('SELECT idTrans,nomTrans,tailleTrans,annotation,seqTrans FROM Transcript WHERE idTrans = ?');
-				$answer->execute(array($trans));
-		?>
-		        <TABLE>
-		<?php
-	        $i=0;
-	        //Affiche les resultats de la requête dans un tableau
+		<?php 
+			include("../Title.php");
+
+			//CONSULTATION DE LA BASE DE DONNEE
+			include("../DatabaseConnection.php");
+
+			//Préparation de la requete sql pour récupéré les informations du transcript
+			$answer = $bdd->prepare('SELECT idTrans,nomTrans,tailleTrans,annotation,seqTrans FROM Transcript WHERE idTrans = ?');
+			//Exécute la requête
+			$answer->execute(array($trans));
+
+		    echo "<TABLE>";
+
+	        //Affiche les résultats de la requête dans un tableau
 	        while ($data = $answer->fetch())
 	        {
-	            $i++;
 	            echo '<TR><TD>'.'Identifiant du trancript: '.'</TD><TD>'.$data['idTrans'].'</TD></TR>'.
 	            '<TR><TD>'.'Nom:  '.'</TD><TD>'.$data['nomTrans'].'</TD></TR>'.
 	            '<TR><TD>'.'Taille:  '.'</TD><TD>'.$data['tailleTrans'].'</TD></TR>'.
@@ -62,10 +49,12 @@ else{$orga='INCONNU';}
 	        }
 			$answer->closeCursor();
 		?>
-		        </TABLE>
-		    <?php 
-				echo '<a href=ProtSheet.php?prot='.$trans.' class=\"nav\">Voir la proteine'.'</a>';
-			?>
+		</TABLE>
+
+	    <?php
+	    	//AFfiche le lien vers la proteine associé 
+			echo '<a href=ProtSheet.php?prot='.$trans.' class=\"nav\">Voir la proteine'.'</a>';
+		?>
         </section>
 	</div>
 	<?php include("../Footer.php"); ?>
