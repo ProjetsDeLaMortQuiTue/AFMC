@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Page de résultas pour les gènes-->
 
 <html lang="fr">
   <head>
@@ -11,89 +12,79 @@
 		session_start();
 		$_SESSION['currentPage']="search";
   		
-  		try
-		{	//Connection à la base de donnée avec l'utilisateur afmc
-			$bdd = new PDO('mysql:host=localhost;dbname=AFMC;charset=utf8','afmc','marine&coralie');
-			
-		}
-		catch (Exception $e)
-		{
-	        	die('Erreur : ' . $e->getMessage());
-		}
+		//CONSULTATION DE LA BASE DE DONNEE
+		include("../DatabaseConnection.php");
 
-		//Initialisation de la requête et les informations à mettre dans cette requête
-		$requete='SELECT idGene FROM Gene NATURAL JOIN Espece ';
-		$info = array();
+		//Initialisation des conditions et des tables nécessairent à la requête
+		$tables='Gene NATURAL JOIN Espece ';
+		$conditions='';
+		$data = array();
 
 		//Ajoute la condition sur la proteine associé
 		if (isset($_GET['idProt']) && $_GET['idProt']!=""){
-	  		$idProt=$_GET['idProt'];
-	  		array_push($info,"%".$idProt."%");
-	  		$requete.='NATURAL JOIN Proteine WHERE ( idProt LIKE ? ';
+	  		array_push($data,"%".$_GET['idProt']."%");
+	  		$tables.='NATURAL JOIN Proteine ';
+	  		$conditions.=' WHERE ( idProt LIKE ? ';
 	  	}
 
 	  	//Ajoute la condition sur l'identifiant du gène
 		if ((isset($_GET['id'])) && ($_GET['id']!="")){
-	  		$id=$_GET['id'];
-	  		array_push($info,"%".$id."%");
-	  		if($requete=='SELECT idGene FROM Gene NATURAL JOIN Espece '){
-	  			$requete.='WHERE ( idGene LIKE ? ';
-	  		}else{$requete.='OR idGene LIKE ? ';}
+	  		array_push($data,"%".$_GET['id']."%");
+	  		if($conditions==''){
+	  			$conditions.='WHERE ( idGene LIKE ? ';
+	  		}else{$conditions.='OR idGene LIKE ? ';}
 	  	}
 
 	  	//Ajoute la condition sur le nom de la proteine issus au gene
 	  	if (isset($_GET['nomProt']) && $_GET['nomProt']!=""){
-	  		$nom=$_GET['nomProt'];
-	  		array_push($info,"%".$nom."%");
-	  		if($requete=='SELECT idGene FROM Gene NATURAL JOIN Espece '){
-	  			$requete.='WHERE ( nomProtGene LIKE ? ';
-	  		}else{$requete.='OR nomProtGene LIKE ? ';}
+	  		array_push($data,"%".$_GET['nomProt']."%");
+	  		if($conditions==''){
+	  			$conditions.='WHERE ( nomProtGene LIKE ? ';
+	  		}else{$conditions.='OR nomProtGene LIKE ? ';}
 	  	}
 
 	  	//Ajoute la condition sur l'intervalle pour la taille
 	  	if (isset($_GET['taille1']) && $_GET['taille1']!=""){
-	  		array_push($info,$_GET['taille1']);
-	  		array_push($info,$_GET['taille2']);
-	  		if($requete=='SELECT idGene FROM Gene NATURAL JOIN Espece '){
-	  			$requete.='WHERE ( tailleGene BETWEEN ? AND ?';
-	  		}else{$requete.='OR tailleGene BETWEEN ? AND ?';}
+	  		array_push($data,$_GET['taille1']);
+	  		array_push($data,$_GET['taille2']);
+	  		if($conditions==''){
+	  			$conditions.='WHERE ( tailleGene BETWEEN ? AND ? ';
+	  		}else{$conditions.='OR tailleGene BETWEEN ? AND ?';}
 	  	}
 
 	  	//Ajoute la condition sur l'orientation du brin
 	  	if (isset($_GET['brin']) && $_GET['brin']!=""){
-	  		$brin=$_GET['brin'];
-	  		array_push($info,$brin);
-	  		if($requete=='SELECT idGene FROM Gene NATURAL JOIN Espece '){
-	  			$requete.='WHERE ( brin = ? ';
-	  		}else{$requete.='OR brin = ? ';}
+	  		array_push($data,$_GET['brin']);
+	  		if($conditions==''){
+	  			$conditions.='WHERE ( brin = ? ';
+	  		}else{$conditions.='OR brin = ? ';}
 	  	}
 
 	  	//Ajoute la condition sur le numéro du chromosome
 	  	if (isset($_GET['chromosome']) && $_GET['chromosome']!=""){
-	  		$chromosome=$_GET['chromosome'];
-	  		array_push($info,$chromosome);
-	  		if($requete=='SELECT idGene FROM Gene NATURAL JOIN Espece '){
-	  			$requete.='WHERE ( numChromosome = ? ';
-	  		}else{$requete.='OR numChromosome = ? ';}
+	  		array_push($data,$_GET['chromosome']);
+	  		if($conditions==''){
+	  			$conditions.='WHERE ( numChromosome = ? ';
+	  		}else{$conditions.='OR numChromosome = ? ';}
 	  	}
 
 	  	//Ajoute la condition sur un motif pour la sequence
 	  	if (isset($_GET['motif']) && $_GET['motif']!=""){
 	  		array_push($info,$_GET['motif']);
-	  		if($requete=='SELECT idGene FROM Gene NATURAL JOIN Espece '){
-	  			$requete.='WHERE ( seqGene REGEXP ? ';
-	  		}else{$requete.='OR seqGene REGEXP ? ';}
+	  		if($conditions==''){
+	  			$conditions.='WHERE ( seqGene REGEXP ? ';
+	  		}else{$conditions.='OR seqGene REGEXP ? ';}
 	  	}
 
 	  	//Termine la requête avec la condition non optionnel sur l'espece
-	  	array_push($info,$_SESSION['orga']);
-	  	if($requete=='SELECT idGene FROM Gene NATURAL JOIN Espece '){
-	  		$requete.='WHERE nomEsp = ? ';
-	  	}else{$requete.=') AND nomEsp = ? ';}
+	  	array_push($data,$_SESSION['orga']);
+	  	if($conditions==''){
+	  		$conditions.='WHERE nomEsp = ? ';
+	  	}else{$conditions.=') AND nomEsp = ? ';}
 
 	  	//Lance la requête ainsi crée
-	  	$answer= $bdd->prepare($requete);
-		$answer->execute($info);
+	  	$answer= $bdd->prepare('SELECT idGene FROM '.$tables.$conditions);
+		$answer->execute($data);
   ?>
   <body>
 
