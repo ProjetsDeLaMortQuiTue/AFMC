@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Contigue (
 	debContig INT,
 	finContig INT,
 	tailleContig INT,
-	seqContig TEXT,
+	seqContig TEXT(65536),
 	idEsp SMALLINT UNSIGNED NOT NULL,
 	PRIMARY KEY (idContig),
 	CONSTRAINT fk_idEspContigue
@@ -158,8 +158,8 @@ VALUES (1,'MeilleurWebmaster','topmoumoute','coralie.rohmer@hotmail.fr','Mlle','
 (3,'Nirvana','chatsupersympa','coralie.rohmer@u-psud.fr','M.','Monsieur','leChat','Institut Félin du Siam','2018-09-15','2018-09-16 20:00:00');
 
 CREATE TABLE IF NOT EXISTS Phylogenie(
-	idGene CHAR(10),
-	idUser int,
+	idGene CHAR(10) NOT NULL,
+	idUser int unsigned,
 	fichier VARCHAR(100),
 	autreDonnee TEXT,
 	annotation TEXT,
@@ -176,7 +176,7 @@ ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS Structure(
 	idProt CHAR(10),
-	idUser int,
+	idUser int unsigned,
 	fichier VARCHAR(100),
 	autreDonnee TEXT,
 	annotation TEXT,
@@ -193,7 +193,7 @@ ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS PathwayReaction(
 	idProt CHAR(10),
-	idUser int,
+	idUser int unsigned,
 	idPathway VARCHAR(50),
 	autreDonnee TEXT,
 	annotation TEXT,
@@ -210,7 +210,7 @@ ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS KEGG(
 	idProt CHAR(10),
-	idUser int,
+	idUser int unsigned,
 	codeProt VARCHAR(100),
 	autreDonnee TEXT,
 	annotation TEXT,
