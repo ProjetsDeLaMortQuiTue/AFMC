@@ -1,32 +1,28 @@
 <!DOCTYPE html>
+<!-- Page d'affichage du formulaire de mot de passe oublié -->
 
 <html lang="fr">
-<!-- Récupére l'organisme depuis la variable de session -->
+
 <?php
 	session_start();
 	$_SESSION['currentPage']="user";
+	//Définition des variables
 	$TAILLE_CODE=20;
 	$email='';
 	$erreurEmail='';
 	$erreurCode='';
 	$code="sfer";
-	//récupére l'adresse mail
+	//Récupère l'email
 	if(isset($_POST['email']) && $_POST['email']!='' ){
 		$email=$_POST['email'];
-		try
-		{	//Connection à la base de donnée avec l'utilisateur afmc
-			$bdd = new PDO('mysql:host=localhost;dbname=AFMC;charset=utf8','afmc','marine&coralie');
-			
-		}
-		catch (Exception $e)
-		{
-	        	die('Erreur : ' . $e->getMessage());
-		}
+		//Connexion à la base de donnée
+		include("../DatabaseConnection.php");
+		//Vérifie que l'email existe dans la base de donnée
 		$answer = $bdd->prepare('SELECT count(*),mdp,alias FROM User WHERE email= ?');
 		$answer->execute(array($email));
 		while ($data = $answer->fetch())
 	   	{
-	   		//Vérifie que l'adresse mail existe dans la base de donnée
+	   		//Si l'email existe dans la base de donnée
 	        if($data['count(*)'] > 0 ){
 	        	//Génération d'un code aléatoirement
 				$chaine = "abcdefghijklmnpqrstuvwxy013456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -35,22 +31,26 @@
 					$code.= $chaine[rand()%strlen($chaine)];
 				}
 				$_POST['vraicode']=$code;
-	        	//envoie d'un mail
+	        	//Envoie d'un mail avec le code
 				$expediteur = 'coralie.rohmer@hotmail.fr';
 				$objet = 'Mot de passe oublié AFMC';
 				$headers = 'Reply-To: '.$expediteur."\n";
 				$headers .= 'From: "Nom_de_expediteur"<'.$expediteur.'>'."\n";
 				$headers .= 'Delivered-to: '.$email."\n";    
 				$message = 'Votre Code est $code';
+				//Si l'email a bien été envoyé
 				if (mail($email, $objet, $message, $headers))
 				{
-				     $erreurEmail='Votre message a bien été envoyé '.$code;
+				     $erreurEmail='Le code vous a bien été envoyé '.$code;
 				}
-				else // Non envoyé
-				{
-				    $erreurEmail="Votre message n'a pas pu être envoyé ".$code;
+				//Sinon l'email n'a pas pu être envoyé
+				else{
+				    $erreurEmail="Le code n'a pas pu vous être envoyé ".$code;
 				}
-			}else{$erreurEmail="Aucun compte n'est associé à cette email<br>Veuillez vous <a href='SignUp.php'>inscrire.</a><br></TD></TR>";}
+			}//Sinon l'email n'existe pas dans la base de donnée
+			else{
+				$erreurEmail="Aucun compte n'est associé à cette email<br>Veuillez vous <a href='SignUp.php'>inscrire.</a><br></TD></TR>";
+			}
 		}$answer->closeCursor();
 	}
 	if(isset($_POST['code']) && $_POST['code']==$_POST['vraicode'] ){

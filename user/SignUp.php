@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<!-- Page d'affichage du formulaire d'inscription pour l'utilisateur -->
 
 <html lang="fr">
-<!-- Récupére l'organisme depuis la variable de session -->
 <?php
+	//Création des variables
 	$erreur="";
 	$id='exemple:prenom.nom';
 	$email="exemple@truc.fr";
@@ -16,37 +17,32 @@
 	$nomLabo="exemple:lri";
 	session_start();
 	$_SESSION['currentPage']="user";
+	
 	if (isset($_POST['id'])){
-		try
-		{	//Connection à la base de donnée avec l'utilisateur afmc
-			$bdd = new PDO('mysql:host=localhost;dbname=AFMC;charset=utf8','afmc','marine&coralie');
-			
-		}
-		catch (Exception $e)
-		{
-	        	die('Erreur : ' . $e->getMessage());
-		}
+		
+		//Connexion à la base de donnée
+		include("../DatabaseConnection.php");
 
-		//Vérifie si l'identifiant n'existe pas déja
+		//Vérifie si l'identifiant n'existe pas déjà
 		if ($_POST['id'] != 'exemple:prenom.nom' && $_POST['id'] != ''){
 			$id=$_POST['id'];
 			$answerId = $bdd->prepare('SELECT count(*) FROM User WHERE alias = ?');
 			$answerId->execute(array($id));
 			while ($data = $answerId->fetch())
 		   	{
-		        	if($data['count(*)'] == 0 ){
+		        	if($data['count(*)'] != 0 ){
+						$erreur="L'identifiant $id est déjà utilisé<br>";
 					}
-					else{$erreur="L'identifiant $id est déja utilisé<br>";}
 			}
 			$answerId->closeCursor();
-		}else{$erreur.="L'identifiant est obligatoire<br>";}
+		}else{$erreur="L'identifiant est obligatoire<br>";}
 
 		//Vérifie si le mot de passe est correcte
 		if ((isset($_POST['mdp1'])) && ($_POST['mdp1'] != '') &&
 			(isset($_POST['mdp2'])) && ($_POST['mdp2'] != '')){
 			$mdp1=$_POST['mdp1'];
 			$mdp2=$_POST['mdp2'];
-			if ($mdp1 != $mdp2){$erreur.="Les mots de passes sont différents<br>";
+			if ($mdp1 != $mdp2){$erreur.="Les mots de passe sont différents<br>";
 				$mdp1="";
 				$mdp2="";
 			}
@@ -59,14 +55,14 @@
 			$answerEmail->execute(array($email));
 			while ($data = $answerEmail->fetch())
 		   	{
-		        if($data['count(*)'] == 0 ){
-
-				}else{$erreur.="L'email est déja utilisé pour un autre compte<br>";}
+		        if($data['count(*)'] != 0 ){
+					$erreur.="L'email est déja utilisé pour un autre compte<br>";
+				}
 			}
 			$answerEmail->closeCursor();
 		}else{$erreur.="L'email est obligatoire<br>";}
 
-		//Récupére la civilité et la conserver
+		//Récupère la civilité
 		if ((isset($_POST['civilite'])) && ($_POST['civilite'] != '')){
 			$civilite=$_POST['civilite'];
 			if($civilite=='M.'){
@@ -84,19 +80,20 @@
 			}
 		}
 
-		//Récupére le nom est le conserver
+		//Récupère le nom
 		if ((isset($_POST['nom'])) && ($_POST['nom'] != '')){
 			$nom=$_POST['nom'];
 		}
-		//Récupére le prénom est le conserver
+		//Récupère le prénom
 		if ((isset($_POST['prenom'])) && ($_POST['prenom'] != '')){
 			$prenom=$_POST['prenom'];
 		}
-		//Récupére le nom du laboratoire est le conserver
+		//Récupère le nom du laboratoire
 		if ((isset($_POST['nomLabo'])) && ($_POST['nomLabo'] != '')){
 			$nomLabo=$_POST['nomLabo'];
 		}
 
+		//S'il n'y a pas d'erreur, la bdd est mise à jour avec le nouvel utilisateur
 		if($erreur==''){
 			$ajoutUtilisateur = $bdd->prepare('INSERT INTO User (alias,mdp,email,civilite,nom,prenom,nomLabo,dateDeCreation,dateDerniereCo)VALUES (?,?,?,?,?,?,?,?,?);');
 			$ajoutUtilisateur->execute(array($id,$mdp1,$email,$civilite,$nom,$prenom,$nomLabo,date("Y-m-d"),date("Y-m-d H:i:s")));

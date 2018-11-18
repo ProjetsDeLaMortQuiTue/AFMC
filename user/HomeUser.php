@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+<!-- Page d'affichage des informations de l'utilisateur -->
 
 <html lang="fr">
-<!-- Récupére l'organisme depuis la variable de session -->
+<!-- Récupère l'utilisateur depuis la variable de session -->
 <?php
 	session_start();
 	$_SESSION['currentPage']="user";
@@ -21,20 +22,18 @@
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-		<?php include("../Title.php"); ?>
-		<?php
-			try
-			{	//Connection à la base de donnée avec l'utilisateur afmc
-				$bdd = new PDO('mysql:host=localhost;dbname=AFMC;charset=utf8','afmc','marine&coralie');
-				
-			}
-			catch (Exception $e)
-			{
-		        	die('Erreur : ' . $e->getMessage());
-			}
-
+		<?php include("../Title.php");
+			
+			//Connexion à la base de donnée
+			include("../DatabaseConnection.php");
+			
+			//Préparation de la requête sql pour récupérer toutes les informations de l'utilisateur
 			$answer = $bdd->prepare('SELECT alias,email,nom,prenom,nomLabo,dateDeCreation,dateDerniereCo FROM User WHERE alias = ?');
+			
+			//Exécute la requête avec la variable passée en argument (la variable remplace "?")
 			$answer->execute(array($user));
+			
+			//Affiche les résultats de la requête dans un tableau
 			echo "<TABLE>";
 			while ($data = $answer->fetch())
 			{
@@ -50,7 +49,7 @@
 			echo "</TABLE>";
 		?>
 		<form action="LogIn.php" method="post">
-		<input type="submit" value="Se déconnecter">
+			<input type="submit" value="Se déconnecter">
 		</form>
         </section>
 	</div>
