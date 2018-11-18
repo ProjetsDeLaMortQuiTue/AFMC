@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Element pour page: Menu -->
+<!-- Eléments pour pages: Menu -->
 
 <html lang="fr">
   <head>
@@ -8,6 +8,7 @@
 	<title>AFMC</title>
   </head>
   <?php
+  	//Définitions des varibales
   	$navigation_home="\"navigation_out\"";
   	$navigation_general_data="\"navigation_out\"";
   	$navigation_genes="\"navigation_out\"";
@@ -37,7 +38,7 @@
 		else if ($currentPage=="general_data"){
 				$navigation_general_data="\"navigation_in\"";
 			}
-			//Si la page courante est la pages des genes
+			//Si la page courante est la page des gènes
 			else if ($currentPage=="genes"){
 					$navigation_genes="\"navigation_in\"";
 					$home_path="../Home.php";
@@ -49,7 +50,7 @@
 				  	$logIn_path="../user/LogIn.php";
   					$user_path="../user/HomeUser.php";
 				}
-				//Si la page courante est la page des proteines
+				//Si la page courante est la page des protéines
 				else if ($currentPage=="proteines"){
 						$navigation_proteines="\"navigation_in\"";
 						$home_path="../Home.php";
@@ -113,7 +114,7 @@
 			}
 			echo "<p class=$navigation_search><a href=\"$search_path\" class=\"nav\">Recherche</a><br>
 					</p>
-										<p class=$navigation_contact>
+					<p class=$navigation_contact>
 						<a href=\"$contact_path\" class=\"nav\">Contact</a><br>
 					</p>";
 

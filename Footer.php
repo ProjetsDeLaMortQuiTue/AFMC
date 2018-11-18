@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Element pour page: Pied de page -->
+<!-- Eléments pour pages: Pied de page -->
 
 <html lang="fr">
   <head>

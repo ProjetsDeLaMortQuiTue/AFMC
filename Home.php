@@ -10,14 +10,14 @@
   
   <?php session_start();$_SESSION['currentPage']="home"; ?>
   <?php
-		//CONSULTATION DE LA BASE DE DONNEE
+		//Connexion à la base de donnée
 		include("DatabaseConnection.php");
 
-		//Requete sql pour les informations des espèces disponibles
+		//Requête sql pour les informations des espèces disponibles
 		$answer = $bdd->prepare('SELECT nomEsp FROM Espece');
 		$answer->execute();
 
-		//On récupére les espèces disponible dans un tableau
+		//On récupère les espèces disponibles dans un tableau
 		$organisms = array();
 		while ($data = $answer->fetch())
 	    {
@@ -38,7 +38,7 @@
 			<form action="General_data.php" method="POST">	
 					Choix de l'organisme:		
 					<?php
-						//Crée la liste pour sélectionné l'espèce et l'affiche
+						//Créer la liste pour sélectionner l'espèce et l'affiche
 						$liste = '<select size=1 name="orga">';
 						foreach($organisms as $organism){
 						    $liste .= '<option value="'.$organism.'">'.$organism.'</option>';

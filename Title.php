@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Element pour page: Titre en début de page -->
+<!-- Eléments pour pages: Titre en début de page -->
 
 <html lang="fr">
 <head>
