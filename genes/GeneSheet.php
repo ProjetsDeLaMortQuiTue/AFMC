@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- Page qui affiche un gene pour un organisme donnée -->
+<!-- Page qui affiche un gène pour un organisme donné -->
 
 <html lang="fr">
 <?php
 	session_start();
 	$_SESSION['currentPage']="genes";
 
-	//Récupére le gène à afficher
+	//Récupère le gène à afficher
 	if ((isset($_GET['gene'])) && ($_GET['gene'] != '')){
 	$gene = $_GET['gene'];
 	}
@@ -18,17 +18,17 @@
 	<title>AFMC</title>
   </head>
   	<?php
-		//CONSULTATION DE LA BASE DE DONNEE
+		//Connexion à la base de donnée
 		include("../DatabaseConnection.php");
 
 		//Préparation de la requête sql pour récupérer les informations sur le gène
 		$answerGene = $bdd->prepare('SELECT idGene,nomProtGene,tailleGene,debGene,finGene,brin,numChromosome,seqGene FROM Gene WHERE idGene = ?');
-		//Execute la requête avec la variable passé en argument ($gene remplace ?)
+		//Exécute la requête avec la variable passée en argument ($gene remplace "?")
 		$answerGene->execute(array($gene));
 		
 		//Préparation de la requête sql pour récupérer les proteines associés au gène
 		$answerProt = $bdd->prepare('SELECT idProt FROM Proteine WHERE idGene = ?');
-		//Execute la requête avec la variable passé en argument ($gene remplace ?)
+		//Exécute la requête avec la variable passée en argument ($gene remplace "?")
 		$answerProt->execute(array($gene));
 	?>
   <body>
@@ -55,7 +55,7 @@
 			$answerGene->closeCursor();
 
 			echo '<TR><TD>Proteine(s) issus du gène:</TD><TD>';
-	        //Affiche les resultats de la seconde requête dans le tableau
+	        //Affiche les résultats de la seconde requête dans le tableau
 	        while ($data = $answerProt->fetch())
 	        {
 	            echo '<TR><TD><a href=../proteines/ProtSheet.php?prot='.$data['idProt'].' class=\"nav\">'.$data['idProt'].';'.'</a><br></TD></TR>';

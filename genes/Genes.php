@@ -26,15 +26,15 @@
 			//Si un organisme a été selectionné
 			if ((isset($_SESSION['idOrga'])) && ($_SESSION['idOrga'] != '')){
 
-				//CONSULTATION DE LA BASE DE DONNEE
+				//Connexion à la base de donnée
 				include("../DatabaseConnection.php");
 
-				//Requete sql pour récupérer toute les gènes de l'espèces donné
+				//Prépare la requête sql pour récupérer tous les gènes de l'espèce donnée
 				$answer = $bdd->prepare('SELECT idGene FROM Gene WHERE idEsp= ?');
-				//Execute la requête avec la variable passé en argument (la variable remplace ?)
+				//Exécute la requête avec la variable passé en argument (la variable remplace "?")
 				$answer->execute(array($_SESSION['idOrga']));
 				echo "<TABLE>";
-				//Affiche les résultats de la requête dans la page
+				//Affiche les résultats de la requête dans la page, sous forme de lien vers le détail de chaque gène
 				while ($data = $answer->fetch())
 			        {
 			            echo '<TR><TD><a href=GeneSheet.php?gene='.$data['idGene'].' class=\"nav\">'.$data['idGene'].'</a><br></TD></TR>';
