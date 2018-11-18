@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Page d'affichage des proteines pour l'espèce donnée -->
+<!-- Page d'affichage des protéines pour l'espèce donnée -->
 
 <html lang="fr">
 <?php
@@ -25,15 +25,15 @@
 			//Si un organisme a été selectionné
 			if ((isset($_SESSION['idOrga'])) && ($_SESSION['idOrga'] != '')){
 
-				//CONSULTATION DE LA BASE DE DONNEE
+				//Connexion à la base de donnée
 				include("../DatabaseConnection.php");
 
-				//Requete sql pour récupérer toute les proteines de l'espèces donné
+				//Préparation de la requête sql pour récupérer toutes les protéines de l'espèce donnée
 				$answer = $bdd->prepare('SELECT idProt FROM Proteine NATURAL JOIN Gene WHERE idEsp= ?');
-				//Execute la requête avec la variable passé en argument (la variable remplace ?)
+				//Exécute la requête avec la variable passée en argument (la variable remplace "?")
 				$answer->execute(array($_SESSION['idOrga']));
 				echo "<TABLE>";
-		        //Affiche les resultats de la requête dans un tableau
+		        //Affiche les résultats de la requête dans un tableau
 		        while ($data = $answer->fetch())
 		        {
 		            echo '<TR><TD><a href=ProtSheet.php?prot='.$data['idProt'].' class=\"nav\">'.$data['idProt'].'</a><br></TD></TR>';

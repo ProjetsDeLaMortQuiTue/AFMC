@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- Page d'affichage des informations pour une proteine donnée -->
+<!-- Page d'affichage des informations pour une protéine donnée -->
 
 <html lang="fr">
 <?php
 	session_start();
 	$_SESSION['currentPage']="proteines";
-	//Récupére la proteine à afficher
-
+	
+	//Récupère la protéine à afficher
 	if ((isset($_GET['prot'])) && ($_GET['prot'] != '')){
 	$prot = $_GET['prot'];
 	}
@@ -27,12 +27,12 @@
 		<?php 
 			include("../Title.php");
 
-			//CONSULTATION DE LA BASE DE DONNEE
+			//Connexion à la base de donnée
 			include("../DatabaseConnection.php");
 
-			//Préparation de la requete sql pour récupéré les informations de la proteine
+			//Préparation de la requête sql pour récupérer les informations de la protéine
 			$answer = $bdd->prepare('SELECT idProt,nomProt,tailleProt,seqProt,idGene FROM Proteine WHERE idProt = ?');
-			//Exécution de la requête avec la proteine en argument
+			//Exécution de la requête avec la protéine en argument
 			$answer->execute(array($prot));
 
 		    echo"<TABLE>";
@@ -50,7 +50,7 @@
 		?>
 	    </TABLE>
 	    <?php 
-	    	//Affiche le lien vers le transcript
+	    	//Affiche le lien vers le transcript correspondant
 			echo '<a href=TransSheet.php?trans='.$prot.' class=\"nav\">Voir le transcript'.'</a>';
 		?>
         </section>
