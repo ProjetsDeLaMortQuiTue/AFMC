@@ -42,7 +42,8 @@
 			(isset($_POST['mdp2'])) && ($_POST['mdp2'] != '')){
 			$mdp1=$_POST['mdp1'];
 			$mdp2=$_POST['mdp2'];
-			if ($mdp1 != $mdp2){$erreur.="Les mots de passe sont différents<br>";
+			if ($mdp1 != $mdp2){
+				$erreur.="Les mots de passe sont différents<br>";
 				$mdp1="";
 				$mdp2="";
 			}
@@ -51,15 +52,19 @@
 		//Vérifie si l'email n'existe pas déja et est correcte
 		if ((isset($_POST['email'])) && ($_POST['email'] != 'exemple@truc.fr') && ($_POST['email'] != '')){
 			$email=$_POST['email'];
-			$answerEmail = $bdd->prepare('SELECT count(*) FROM User WHERE email= ?');
-			$answerEmail->execute(array($email));
-			while ($data = $answerEmail->fetch())
-		   	{
-		        if($data['count(*)'] != 0 ){
-					$erreur.="L'email est déja utilisé pour un autre compte<br>";
+			//Si l'email est correcte
+			if (preg_match("/^.+@[a-z]+\.[a-z]+$/", $email)){
+				//Vérifie que l'email n'existe pas déja
+				$answerEmail = $bdd->prepare('SELECT count(*) FROM User WHERE email= ?');
+				$answerEmail->execute(array($email));
+				while ($data = $answerEmail->fetch())
+			   	{
+			        if($data['count(*)'] != 0 ){
+						$erreur.="L'email est déja utilisé pour un autre compte<br>";
+					}
 				}
-			}
-			$answerEmail->closeCursor();
+				$answerEmail->closeCursor();
+			}else{$erreur.="L'email n'est pas correcte<br>";}
 		}else{$erreur.="L'email est obligatoire<br>";}
 
 		//Récupère la civilité
@@ -95,6 +100,7 @@
 
 		//S'il n'y a pas d'erreur, la bdd est mise à jour avec le nouvel utilisateur
 		if($erreur==''){
+			if($nomLabo='exemple:lri'){$nomLabo='';}
 			$ajoutUtilisateur = $bdd->prepare('INSERT INTO User (alias,mdp,email,civilite,nom,prenom,nomLabo,dateDeCreation,dateDerniereCo)VALUES (?,?,?,?,?,?,?,?,?);');
 			$ajoutUtilisateur->execute(array($id,$mdp1,$email,$civilite,$nom,$prenom,$nomLabo,date("Y-m-d"),date("Y-m-d H:i:s")));
 			$ajoutUtilisateur->closeCursor();

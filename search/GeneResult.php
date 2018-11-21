@@ -15,32 +15,25 @@
 		//CONSULTATION DE LA BASE DE DONNEE
 		include("../DatabaseConnection.php");
 
-		//Initialisation des conditions et des tables nécessairent à la requête
-		$tables='Gene NATURAL JOIN Espece ';
+		//Initialisation des variables nécessairent à la requête
+		$attributs='idGene';
+		$tables=' FROM Gene NATURAL JOIN Espece ';
 		$conditions='';
 		$data = array();
-
-		//Ajoute la condition sur la proteine associé
-		if (isset($_GET['idProt']) && $_GET['idProt']!=""){
-	  		array_push($data,"%".$_GET['idProt']."%");
-	  		$tables.='NATURAL JOIN Proteine ';
-	  		$conditions.=' WHERE ( idProt LIKE ? ';
-	  	}
 
 	  	//Ajoute la condition sur l'identifiant du gène
 		if ((isset($_GET['id'])) && ($_GET['id']!="")){
 	  		array_push($data,"%".$_GET['id']."%");
-	  		if($conditions==''){
-	  			$conditions.='WHERE ( idGene LIKE ? ';
-	  		}else{$conditions.='OR idGene LIKE ? ';}
+	  		$conditions.='WHERE idGene LIKE ? ';
 	  	}
 
 	  	//Ajoute la condition sur le nom de la proteine issus au gene
 	  	if (isset($_GET['nomProt']) && $_GET['nomProt']!=""){
 	  		array_push($data,"%".$_GET['nomProt']."%");
 	  		if($conditions==''){
-	  			$conditions.='WHERE ( nomProtGene LIKE ? ';
-	  		}else{$conditions.='OR nomProtGene LIKE ? ';}
+	  			$conditions.='WHERE nomProtGene LIKE ? ';
+	  		}else{$conditions.='AND nomProtGene LIKE ? ';}
+	  		$attributs.=',nomProtGene';
 	  	}
 
 	  	//Ajoute la condition sur l'intervalle pour la taille
@@ -48,42 +41,55 @@
 	  		array_push($data,$_GET['taille1']);
 	  		array_push($data,$_GET['taille2']);
 	  		if($conditions==''){
-	  			$conditions.='WHERE ( tailleGene BETWEEN ? AND ? ';
-	  		}else{$conditions.='OR tailleGene BETWEEN ? AND ?';}
+	  			$conditions.='WHERE tailleGene BETWEEN ? AND ? ';
+	  		}else{$conditions.='AND tailleGene BETWEEN ? AND ?';}
+	  		$attributs.=',tailleGene';
 	  	}
 
 	  	//Ajoute la condition sur l'orientation du brin
 	  	if (isset($_GET['brin']) && $_GET['brin']!=""){
 	  		array_push($data,$_GET['brin']);
 	  		if($conditions==''){
-	  			$conditions.='WHERE ( brin = ? ';
-	  		}else{$conditions.='OR brin = ? ';}
+	  			$conditions.='WHERE brin = ? ';
+	  		}else{$conditions.='AND brin = ? ';}
+	  		$attributs.=',brin';
 	  	}
 
 	  	//Ajoute la condition sur le numéro du chromosome
 	  	if (isset($_GET['chromosome']) && $_GET['chromosome']!=""){
 	  		array_push($data,$_GET['chromosome']);
 	  		if($conditions==''){
-	  			$conditions.='WHERE ( numChromosome = ? ';
-	  		}else{$conditions.='OR numChromosome = ? ';}
+	  			$conditions.='WHERE numChromosome = ? ';
+	  		}else{$conditions.='AND numChromosome = ? ';}
+	  		$attributs.=',numChromosome';
+	  	}
+
+	  	//Ajoute la condition sur la proteine associé
+		if (isset($_GET['idProt']) && $_GET['idProt']!=""){
+	  		array_push($data,"%".$_GET['idProt']."%");
+	  		$tables.='NATURAL JOIN Proteine ';
+	  		if($conditions==''){
+	  			$conditions.=' WHERE idProt LIKE ? ';
+	  		}else{$conditions.=' AND idProt LIKE ? ';}
+	  		$attributs.=',idProt';
 	  	}
 
 	  	//Ajoute la condition sur un motif pour la sequence
 	  	if (isset($_GET['motif']) && $_GET['motif']!=""){
-	  		array_push($info,$_GET['motif']);
+	  		array_push($data,$_GET['motif']);
 	  		if($conditions==''){
-	  			$conditions.='WHERE ( seqGene REGEXP ? ';
-	  		}else{$conditions.='OR seqGene REGEXP ? ';}
+	  			$conditions.='WHERE seqGene REGEXP ? ';
+	  		}else{$conditions.='AND seqGene REGEXP ? ';}
 	  	}
 
 	  	//Termine la requête avec la condition non optionnel sur l'espece
 	  	array_push($data,$_SESSION['orga']);
 	  	if($conditions==''){
 	  		$conditions.='WHERE nomEsp = ? ';
-	  	}else{$conditions.=') AND nomEsp = ? ';}
+	  	}else{$conditions.=' AND nomEsp = ? ';}
 
 	  	//Lance la requête ainsi crée
-	  	$answer= $bdd->prepare('SELECT idGene FROM '.$tables.$conditions);
+	  	$answer= $bdd->prepare('SELECT '.$attributs.$tables.$conditions);
 		$answer->execute($data);
   ?>
   <body>
@@ -95,14 +101,31 @@
 		<!-- Contenu de la page -->
 		<section>
 			<?php include("../Title.php"); ?>
+			Résultats : <br>
+			<TABLE cellpadding=8>
+			<TR>
 			<?php
-			//Affiche le resultat de la requête (idGene+lien vers la page associé au gène)
+			$liste_attributs=preg_split ( "/,/", $attributs);
+			foreach ($liste_attributs as $attribut) {
+				echo '<TD>'.$attribut.'</TD>';
+			}
+			unset($liste_attributs[0]);
+			echo '</TR>';
 			while ($data = $answer->fetch())
 		   	{
-		    	echo "<a href=\"../genes/GeneSheet.php?gene=".$data['idGene'].'" >'.$data['idGene']."</a><br>";
+		   		//Affiche un lien vers le gène
+		    	echo '<TR><TD><a href="../genes/GeneSheet.php?gene='.$data['idGene'].'" >'.$data['idGene'].'</a></TD>';
+
+		    	//Affiche les attributs autres que idGene
+		    	foreach ($liste_attributs as $attribut) {
+					echo '<TD>'.$data[$attribut].'</TD>';
+				}
+				echo '</TR>';
 			}
+
 			$answer->closeCursor(); 
 			?>
+			</TABLE>
         </section>
 	</div>
 	

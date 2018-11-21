@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Page d'affichage des informations pour un utilisteur donnée -->
 
 <html lang="fr">
   <head>
@@ -9,6 +10,7 @@
   
   <?php session_start();$_SESSION['currentPage']="search";?>
   <body>
+
 	<?php include("../Menu.php"); ?>
 	
 	<!-- Milieu de page -->
@@ -17,19 +19,18 @@
 		<section>
 		<?php include("../Title.php"); ?>
 		<?php
-			try
-			{	//Connection à la base de donnée avec l'utilisateur afmc
-				$bdd = new PDO('mysql:host=localhost;dbname=AFMC;charset=utf8','afmc','marine&coralie');
-				
-			}
-			catch (Exception $e)
-			{
-		        	die('Erreur : ' . $e->getMessage());
-			}
+
 			if (isset($_GET['id']) && $_GET['id']){
 				$id=$_GET['id'];
+
+				//CONSULTATION DE LA BASE DE DONNEE
+				include("../DatabaseConnection.php");
+
+				//Préparation et exécution requête
 				$answer = $bdd->prepare('SELECT alias,email,nom,prenom,nomLabo,dateDeCreation,dateDerniereCo FROM User WHERE alias = ?');
 				$answer->execute(array($id));
+
+				//Affichage des informations dans une table
 				echo "<TABLE>";
 				while ($data = $answer->fetch())
 				{
