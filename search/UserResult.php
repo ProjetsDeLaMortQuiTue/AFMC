@@ -12,14 +12,14 @@
 		include("../DatabaseConnection.php");
 
 		//Initialisation des variables nécessairent à la requête
-		$attributs='alias';
+		$attributs='idUser,alias';
 		$tables=' FROM User ';
 		$conditions='';
 		$data = array();
 		
 		//Ajoute la condition sur l'alias de l'utilisateur
-		if ((isset($_GET['id'])) && ($_GET['id']!="")){
-	  		$id=$_GET['id'];
+		if ((isset($_GET['alias'])) && ($_GET['alias']!="")){
+	  		$id=$_GET['alias'];
 	  		array_push($data,"%".$id."%");
 	  		if($conditions==''){
 	  			$conditions.='WHERE alias LIKE ? ';
@@ -83,17 +83,19 @@
 			<TR>
 			<?php
 			$liste_attributs=preg_split ( "/,/", $attributs);
+			unset($liste_attributs[0]);
+			//affiche les attributs sauf idUser
 			foreach ($liste_attributs as $attribut) {
 				echo '<TD>'.$attribut.'</TD>';
 			}
-			unset($liste_attributs[0]);
+			unset($liste_attributs[1]);
 			echo '</TR>';
 			while ($data = $answer->fetch())
 			   	{
 			   		//Affiche un lien vers la fiche utilisateur'
-			    	echo "<TR><TD><a href=\"UserSheet.php?id=".$data['alias'].'" >'.$data['alias']."</a></TD>";
+			    	echo "<TR><TD><a href=\"../user/UserSheet.php?id=".$data['idUser'].'" >'.$data['alias']."</a></TD>";
 
-			    	//Affiche les attributs autres que l'alias
+			    	//Affiche les attributs autres que l'alias et idUser
 			    	foreach ($liste_attributs as $attribut) {
 						echo '<TD>'.$data[$attribut].'</TD>';
 					}

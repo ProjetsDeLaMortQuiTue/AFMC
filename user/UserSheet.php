@@ -8,7 +8,7 @@
 	<title>AFMC</title>
   </head>
   
-  <?php session_start();$_SESSION['currentPage']="search";?>
+  <?php session_start();$_SESSION['currentPage']="user";?>
   <body>
 
 	<?php include("../Menu.php"); ?>
@@ -27,7 +27,7 @@
 				include("../DatabaseConnection.php");
 
 				//Préparation et exécution requête
-				$answer = $bdd->prepare('SELECT alias,email,nom,prenom,nomLabo,dateDeCreation,dateDerniereCo FROM User WHERE alias = ?');
+				$answer = $bdd->prepare('SELECT alias,email,nom,prenom,nomLabo,dateDeCreation,dateDerniereCo FROM User WHERE idUser = ?');
 				$answer->execute(array($id));
 
 				//Affichage des informations dans une table

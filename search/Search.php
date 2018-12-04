@@ -70,7 +70,7 @@
 		    	}else{
 		    		echo '<h1>Formulaire pour rechercher un utilisateur</h1>';
 		    		echo '<form action=\'UserResult.php\' method="get"><TABLE>';
-		    		echo '<TR><TD>Identifiant</TD><TD><input type="text" name="id"></TD></TR>
+		    		echo '<TR><TD>Identifiant</TD><TD><input type="text" name="alias"></TD></TR>
 		    	<TR><TD>Nom</TD><TD><input type="text" name="nom"></TD></TR>
 		    	<TR><TD>Prénom</TD><TD><input type="text" name="prenom"></TD></TR>
 		    	<TR><TD>Email</TD><TD><input type="text" name="email"></TD></TR>

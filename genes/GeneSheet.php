@@ -30,6 +30,11 @@
 		$answerProt = $bdd->prepare('SELECT idProt FROM Proteine WHERE idGene = ?');
 		//Exécute la requête avec la variable passée en argument ($gene remplace "?")
 		$answerProt->execute(array($gene));
+
+		//Préparation de la requête sql pour récupérer les phyolgenie associés au gène
+		$answerPhylo = $bdd->prepare('SELECT idUser,fichier,autresDonne,annotation FROM Phylogenie WHERE idGene = ?');
+		//Exécute la requête avec la variable passée en argument ($gene remplace "?")
+		$answerPhylo->execute(array($gene));
 	?>
   <body>
 	<?php include("../Menu.php"); ?>
@@ -39,8 +44,9 @@
 		<section>
 		<?php 
 			include("../Title.php");
+			echo "<h1>Données présentent sur le gène</h1>";
 		    echo '<TABLE>';
-	        //Affiche les résultats de la première requête dans un tableau
+	        //Affiche les informations sur le gène
 	        while ($data = $answerGene->fetch())
 	        {
 	            echo '<TR><TD>'.'Identifiant du gène: '.'</TD><TD>'.$data['idGene'].'</TD></TR>'.
@@ -55,16 +61,36 @@
 			$answerGene->closeCursor();
 
 			echo '<TR><TD>Proteine(s) issus du gène:</TD><TD>';
-	        //Affiche les résultats de la seconde requête dans le tableau
+
+	        //Affiche les proteines issus du gene
 	        while ($data = $answerProt->fetch())
 	        {
-	            echo '<TR><TD><a href=../proteines/ProtSheet.php?prot='.$data['idProt'].' class=\"nav\">'.$data['idProt'].';'.'</a><br></TD></TR>';
+	            echo '<TR><TD><a href=../proteines/ProtSheet.php?prot='.$data['idProt'].'>'.$data['idProt'].';'.'</a><br></TD></TR>';
 	        }
 			$answerProt->closeCursor();
 			echo '</TD></TR>';
 		?>
 		</TABLE>
-        </section>
+		<h1>Données ajoutées par les utilisateurs sur le gène</h1>
+		<?php
+			echo 'Phylogenie possible pour le gène:<BR><TABLE>';
+			//Affiche les phylogenies du le gène
+			$compteurPhylo=0;
+	        while ($data = $answerGene->fetch())
+	        {
+	        	$compteurPhylo++;
+				echo "Fichier :".$data['seqGene']."; autresDonne :".$data['autresDonne']."a nnotation :".$data['annotation']."<a href=../users/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a>';
+	        }
+	        $answerGene->closeCursor();
+	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
+			
+		?>
+		</TABLE><br>
+		<form action=addPhylo.php method="get">
+			<input type="hidden" name="gene" value=<?php echo $gene ?>>
+			<input type="submit" value="Ajouter une phylogénie">
+		</form>
+      	</section>
 	</div>
 	
 	<?php include("../Footer.php"); ?>
