@@ -32,8 +32,7 @@
 		$answerProt->execute(array($gene));
 
 		//Préparation de la requête sql pour récupérer les phyolgenie associés au gène
-		$answerPhylo = $bdd->prepare('SELECT idUser,fichier,autresDonne,annotation FROM Phylogenie WHERE idGene = ?');
-		//Exécute la requête avec la variable passée en argument ($gene remplace "?")
+		$answerPhylo = $bdd->prepare('SELECT idUser,fichier,autreDonnee,annotation FROM Phylogenie WHERE idGene = ?');
 		$answerPhylo->execute(array($gene));
 	?>
   <body>
@@ -76,17 +75,17 @@
 			echo 'Phylogenie possible pour le gène:<BR><TABLE>';
 			//Affiche les phylogenies du le gène
 			$compteurPhylo=0;
-	        while ($data = $answerGene->fetch())
+	        while ($data = $answerPhylo->fetch())
 	        {
 	        	$compteurPhylo++;
-				echo "Fichier :".$data['seqGene']."; autresDonne :".$data['autresDonne']."a nnotation :".$data['annotation']."<a href=../users/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a>';
+				echo "<TR><TD>Fichier: ".$data['fichier']."</TD><TD>autresDonne: ".$data['autreDonnee']."</TD><TD>annotation: ".$data['annotation']."</TD><TD><a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></TD>';
 	        }
 	        $answerGene->closeCursor();
 	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
 			
 		?>
 		</TABLE><br>
-		<form action=addPhylo.php method="get">
+		<form action=addPhylo.php method="post">
 			<input type="hidden" name="gene" value=<?php echo $gene ?>>
 			<input type="submit" value="Ajouter une phylogénie">
 		</form>
