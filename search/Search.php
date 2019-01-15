@@ -10,13 +10,13 @@
   
   <?php session_start();$_SESSION['currentPage']="search"; ?>
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 	
 	<!-- Milieu de page -->
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<?php include("../Title.php"); ?>
 			<TABLE>
 					<TR><TD>Catégorie :</TD><TD>
 					<!-- Affiche les catégories gène et proteine si un organisme a été sélectionné  -->

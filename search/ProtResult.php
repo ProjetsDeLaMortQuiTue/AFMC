@@ -68,13 +68,14 @@
 		$answer->execute($data);
   ?>
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 	
 	<!-- Milieu de page -->
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<?php include("../Title.php"); ?>
+
 			Résultats : <br>
 			<TABLE cellpadding=8>
 			<TR>
