@@ -17,13 +17,13 @@
   </head>
   
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-		<?php include("../Title.php");
-			
+		<?php
 			//Connexion à la base de donnée
 			include("../DatabaseConnection.php");
 			
@@ -45,6 +45,7 @@
 	            '<TR><TD>'.'Date de creation: '.'</TD><TD>'.$data['dateDeCreation'].'</TD></TR>'.
 	            '<TR><TD>'.'Date de dernière connexion: '.'</TD><TD>'.$data['dateDerniereCo'].'</TD></TR>';
 			}
+			
 			$answer->closeCursor();
 			echo "</TABLE>";
 		?>

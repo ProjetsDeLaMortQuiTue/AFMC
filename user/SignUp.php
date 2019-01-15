@@ -118,12 +118,12 @@
   </head>
   
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<?php include("../Title.php"); ?>
 		<h1>Formulaire d'inscription</h1><br>
 		<?php echo $erreur; ?>
 		<form action='SignUp.php' method="post">

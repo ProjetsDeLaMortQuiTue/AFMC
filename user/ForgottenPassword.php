@@ -27,12 +27,12 @@
 </head>
 
 <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
 		<?php 
-			include("../Title.php");
 			//Si une adresse email a été transféré sur cette page
 			if(isset($_POST['email']) && $_POST['email']!='' ){
 				$erreurEmail='';
