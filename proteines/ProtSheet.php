@@ -19,13 +19,13 @@
   </head>
   
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-		<?php 
-			include("../Title.php");
+		<?php
 
 			//Connexion à la base de donnée
 			include("../DatabaseConnection.php");
@@ -43,7 +43,7 @@
 	            echo '<TR><TD>'.'Identifiant de la proteine: '.'</TD><TD>'.$data['idProt'].'</TD></TR>'.
 	            '<TR><TD>'.'Nom:  '.'</TD><TD>'.$data['nomProt'].'</TD></TR>'.
 	            '<TR><TD>'.'Taille: '.'</TD><TD>'.$data['tailleProt'].'</TD></TR>'.
-	            '<TR><TD>'.'Sequence: '.'</TD><TD>'.$data['seqProt'].'</TD></TR>'.
+	            '<TR><TD>'.'Sequence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqProt'].'</TEXTAREA></TD></TR>'.
 	            '<TR><TD>'.'Gène associé: '.'</TS><TD><a href=../genes/GeneSheet.php?gene='.$data['idGene'].' class=\"nav\">'.$data['idGene'].'</a><br></TD></TR>';
 	        }
 			$answer->closeCursor();

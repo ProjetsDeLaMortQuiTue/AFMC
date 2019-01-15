@@ -20,13 +20,12 @@
   </head>
   
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
-
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-		<?php 
-			include("../Title.php");
+		<?php
 
 			//Connexion à la base de donnée
 			include("../DatabaseConnection.php");
@@ -45,7 +44,7 @@
 	            '<TR><TD>'.'Nom:  '.'</TD><TD>'.$data['nomTrans'].'</TD></TR>'.
 	            '<TR><TD>'.'Taille:  '.'</TD><TD>'.$data['tailleTrans'].'</TD></TR>'.
 	            '<TR><TD>'.'Annotation: '.'</TD><TD>'.$data['annotation'].'</TD></TR>'.
-	            '<TR><TD>'.'Sequence: '.'</TD><TD>'.$data['seqTrans'].'</TD></TR>';
+	            '<TR><TD>'.'Sequence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqTrans'].'</TEXTAREA></TD></TR>';
 	        }
 			$answer->closeCursor();
 		?>

@@ -13,14 +13,14 @@
   </head>
   
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
-	
+
 	<!-- Milieu de page -->
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-		<?php 
-			include("../Title.php");
+		<?php
 
 			//Si un organisme a été selectionné
 			if ((isset($_SESSION['idOrga'])) && ($_SESSION['idOrga'] != '')){
