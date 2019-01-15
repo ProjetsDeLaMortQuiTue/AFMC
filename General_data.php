@@ -38,14 +38,13 @@
 
 
   <body>
+	<?php include("Title.php"); ?>
 	<?php include("Menu.php"); ?>
 	
 	<!-- Milieu de page -->
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<!-- Titre -->
-		<?php include("Title.php"); ?>
 		<TABLE>
 		<?php
 	        //Affiche les résultats de la première requête dans un tableau
@@ -53,7 +52,7 @@
 	        {
 	        	$_SESSION['idOrga'] = $data['idEsp']; //conserve l'identifiant de l'espèce en cours
 	            echo '<TR><TD>'.'Nom de l\'espece: '.'</TD><TD>'.$data['nomEsp'].'</TD></TR>'.
-	            '<TR><TD>'.'Nombres de contigues:  '.'</TD><TD>'.$data['nbContigs'].'</TD></TR>'.
+	            /*'<TR><TD>'.'Nombres de contigues:  '.'</TD><TD>'.$data['nbContigs'].'</TD></TR>'.*/
 	            '<TR><TD>'.'Nombres de gènes: '.'</TD><TD>'.$data['nbGenes'].'</TD></TR>'.
 	            '<TR><TD>'.'Nombres de PFAM: '.'</TD><TD>'.$data['nbPFAM'].'</TD></TR>'.
 	            '<TR><TD>'.'Nombres de proteines: '.'</TD><TD>'.$data['nbProts'].'</TD></TR>'.
@@ -62,7 +61,7 @@
 	            '<TR><TD>'.'Souche de l\'espèce: '.'</TD><TD>'.$data['soucheEsp'].'</TD></TR>';
 	        }
 			$answerEspece->closeCursor();
-
+			/*
 			//Affiche les résultats de la seconde requête dans un tableau
 			echo "</TABLE>SuperContigue associé:<TABLE>";
 			while ($data = $answerContigue->fetch())
@@ -70,6 +69,7 @@
 	            echo '<TR><TD>'.$data['numSuperContig']."</TD></TR>";
 	        }
 			$answerContigue->closeCursor();
+			*/
 		?>
 		        </TABLE>
         </section>

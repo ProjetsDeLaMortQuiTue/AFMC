@@ -8,6 +8,6 @@
 	<title>AFMC</title>
   </head>
 	<div id="image_header">
-		<?php echo '<img src="./Titre.png" alt="bandeau de tete" />';?>
+		<?php echo '<img src="../Titre.png" alt="bandeau de tete" />';?>
 	</div>
 </html>

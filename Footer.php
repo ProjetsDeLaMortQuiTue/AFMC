@@ -11,14 +11,17 @@
   <body>
 	
 	<!-- Bandeau inférieur haut -->
+	
 	<div id="footer_up">
 		<div id="footer_up_inside">
-		Créé par Marine & Coralie
+		Créé par MaCo
 		</div>
 	</div>
 	
 	<!-- Bandeau inférieur bas -->
 	<div id="footer_bottom">
+	</div>
+	<div id="footer_bottom_bottom">
 	</div>
 	
   </body>

@@ -28,15 +28,24 @@
 
 
   <body>
+	<?php include("Title.php"); ?>
 	<?php include("Menu.php"); ?>
-	
 	<!-- Milieu de page -->
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-			<?php include("Title.php"); ?>
+			<p class="text">
+				Bonjour et bienvenue sur la base de donnée AFMC!<br><br>
+				
+				Ici vous trouverez toutes les données de votre équipe où que vous soyez.<br>
+				Gènes, protéines, transcrits, phylogénie... Plein de ressources variées 
+				sont disponibles pour mener à bien votre projet de recherche.<br>
+				Par l'ouverture d'un compte en quelques cliques, il vous sera également 
+				permis d'enrichir ces données, et ainsi contribuer à la diffusion de vos 
+				découvertes avec vos collaborateurs.<br>
+			</p>
 			<form action="General_data.php" method="POST">	
-					Choix de l'organisme:		
+					Choisissez un organisme:		
 					<?php
 						//Créer la liste pour sélectionner l'espèce et l'affiche
 						$liste = '<select size=1 name="orga">';
