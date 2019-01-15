@@ -15,12 +15,12 @@
   </head>
   
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-		<?php include("../Title.php"); ?>
 		
 		<?php
 			//Si un organisme a été selectionné

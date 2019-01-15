@@ -36,13 +36,13 @@
 		$answerPhylo->execute(array($gene));
 	?>
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
-		<?php 
-			include("../Title.php");
+		<?php
 			echo "<h1>Données présentent sur le gène</h1>";
 		    echo '<TABLE>';
 	        //Affiche les informations sur le gène
@@ -55,7 +55,7 @@
 	            '<TR><TD>'.'Fin: '.'</TD><TD>'.$data['finGene'].'</TD></TR>'.
 	            '<TR><TD>'.'Brin: '.'</TD><TD>'.$data['brin'].'</TD></TR>'.
 	            '<TR><TD>'.'Numéro du chromosome: '.'</TD><TD>'.$data['numChromosome'].'</TD></TR>'.
-	            '<TR><TD>'.'Sequence: '.'</TD><TD>'.$data['seqGene'].'</TD></TR>';
+	            '<TR><TD>'.'Sequence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqGene'].'</TEXTAREA></TD></TR>';
 	        }
 			$answerGene->closeCursor();
 

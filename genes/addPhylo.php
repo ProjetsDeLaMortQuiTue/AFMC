@@ -31,13 +31,13 @@
 	<title>AFMC</title>
   </head>
   <body>
+	<?php include("../Title2.php"); ?>
 	<?php include("../Menu.php"); ?>
 
 	<div id="conteneur">
 		<!-- Contenu de la page -->
 		<section>
 		<?php 
-			include("../Title.php");
 			if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
 				echo "<h1>Ajout d'une phylogénie pour le gène ".$gene."</h1>";
 		    	echo '<form action=\'addPhylo.php\' method="post"><TABLE>';
