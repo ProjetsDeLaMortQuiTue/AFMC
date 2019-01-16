@@ -93,10 +93,10 @@
 				}
 				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
 
-				echo "<TABLE><TR><TD>Fichier:</TD><TD>".$data['nomFichierArbre']."</TD></TR><TR><TD>Alignement:</TD><TD>".$data['nomFichierAlignement']."</TD></TR><TR><TD>Outils:</TD><TD>".$data['outil']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
+				echo "<TABLE><TR><TD>Arbre:</TD><TD>".$data['nomFichierArbre']."</TD></TR><TR><TD>Alignement:</TD><TD>".$data['nomFichierAlignement']."</TD></TR><TR><TD>Outils:</TD><TD>".$data['outil']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
 				echo "</TABLE>";
 	        }
-	        $answerGene->closeCursor();
+	        $answerPhylo->closeCursor();
 	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
 			
 		?>

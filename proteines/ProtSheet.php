@@ -35,6 +35,20 @@
 			//Exécution de la requête avec la protéine en argument
 			$answer->execute(array($prot));
 
+			//Préparation de la requête sql pour récupérer les structures associé à cette proteines 
+			$answerStruc= $bdd->prepare('SELECT u.idUser,alias,nomFichier,annotation FROM Structure s JOIN User u WHERE idProt = ? AND s.idUser=u.idUser;');
+			$answerStruc->execute(array($prot));
+
+
+			//Récupére l'identifiant de l'utilisateur
+			$idUser='';
+			if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
+				$answerUser = $bdd->prepare('SELECT idUser FROM User WHERE alias = ?');
+				$answerUser->execute(array($_SESSION['user']));
+				while ($data = $answerUser->fetch()){$idUser=$data['idUser'];}
+			}
+
+			echo "<h1>Données présentent pour la proteines ".$prot."</h1>";
 		    echo"<TABLE>";
 
 	        //Affiche les résultats de la requête dans un tableau
@@ -48,11 +62,37 @@
 	        }
 			$answer->closeCursor();
 		?>
-	    </TABLE>
+			    </TABLE>
 	    <?php 
 	    	//Affiche le lien vers le transcript correspondant
 			echo '<a href=TransSheet.php?trans='.$prot.' class=\"nav\">Voir le transcript'.'</a>';
 		?>
+			<h1>Données ajoutées par les utilisateurs sur la proteines</h1>
+		<?php
+			echo 'Structure(s) possible pour cette proteine:<BR>';
+			//Affiche les phylogenies du le gène
+			$compteurStruc=0;
+	        while ($data = $answerStruc->fetch())
+	        {
+	        	$compteurStruc++;
+	        	echo "<bleu>Utilisateur à l'origine: ";
+	        	if ($idUser != '' && $idUser == $data['idUser']){
+					echo "Vous! Modifier? (à venir)</bleu>";
+				}
+				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
+
+				echo "<TABLE><TR><TD>Fichier Structure:</TD><TD>".$data['nomFichier']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
+				echo "</TABLE>";
+	        }
+	        $answerStruc->closeCursor();
+	        if ($compteurStruc==0){echo "Aucune structure n'est disponible pour cette proteine";}
+			
+		?>
+		<form action=addStructure.php method="GET">
+			<input type="hidden" name="prot" value=<?php echo $prot ?>>
+			<input type="submit" value="Ajouter une structure">
+		</form>
+      	</section>
         </section>
 	</div>
 	<?php include("../Footer.php"); ?>

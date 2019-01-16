@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<!-- Page qui permet d'ajouter une phylogénie-->
+<!-- Page d'affichage des protéines pour l'espèce donnée -->
 
 <html lang="fr">
 <?php
 	session_start();
-	$_SESSION['currentPage']="genes";
+	$_SESSION['currentPage']="gene";
+?>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../AFMC.css"> 
+	<title>AFMC</title>
+</head>
+
+<?php
 
 	//Récupère le gène associé à cette nouvelle phylogénie
 	if ((isset($_GET['gene'])) && ($_GET['gene'] != '')){
@@ -109,7 +117,6 @@
 		<!-- Contenu de la page -->
 		<section>
 		<?php 
-			if ((isset($_GET['gene']))&& ($_GET['gene'] != ''))
 			if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
 				//Connexion à la base de donnée
 				include("../DatabaseConnection.php");

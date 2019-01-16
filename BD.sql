@@ -153,12 +153,12 @@ CREATE TABLE IF NOT EXISTS Phylogenie(
         REFERENCES User(idUser)
 )
 ENGINE=INNODB;
+INSERT INTO Phylogenie (idGene,idUser,nomFichierArbre,nomFichierAlignement,outil,annotation) VALUES ('BC1G_00001',1,'Phylogenie/BC1G_00001/Tree_BC1G_00001_1.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_1.fasta','Mon oeil','Rien'),('BC1G_00001',3,'Phylogenie/BC1G_00001/Tree_BC1G_00001_3.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_3.fasta','Phylogeny.fr','C est chiant à faire');
 
 CREATE TABLE IF NOT EXISTS Structure(
 	idProt CHAR(10),
 	idUser int unsigned,
-	fichier VARCHAR(100),
-	autreDonnee TEXT,
+	nomFichier VARCHAR(100),
 	annotation TEXT,
 
 	PRIMARY KEY (idProt,idUser),
