@@ -28,27 +28,6 @@ INSERT INTO Espece
 VALUES (1,'Botrytis Cinerea',4534,16448,42635,16448,16448,42,'B05.10');
 
 
-CREATE TABLE IF NOT EXISTS Contigue (
-	idContig CHAR(12) NOT NULL,
-	numContig SMALLINT,
-	numSuperContig DECIMAL(5,3),
-	debContig INT,
-	finContig INT,
-	tailleContig INT,
-	seqContig TEXT(65536),
-	idEsp SMALLINT UNSIGNED NOT NULL,
-	PRIMARY KEY (idContig),
-	CONSTRAINT fk_idEspContigue
-        FOREIGN KEY (idEsp)
-        REFERENCES Espece(idEsp)
-)
-ENGINE=INNODB;
-
-LOAD DATA LOCAL INFILE '/opt/lampp/htdocs/AFMC/botrytis_cinerea/contig.csv'
-INTO TABLE Contigue
-FIELDS TERMINATED BY ';' ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
-
 CREATE TABLE IF NOT EXISTS Gene (
 	idGene CHAR(10) NOT NULL,
 	nomProtGene VARCHAR(100),
@@ -160,8 +139,9 @@ VALUES (1,'MeilleurWebmaster','topmoumoute','coralie.rohmer@hotmail.fr','Mlle','
 CREATE TABLE IF NOT EXISTS Phylogenie(
 	idGene CHAR(10) NOT NULL,
 	idUser int unsigned,
-	fichier VARCHAR(100),
-	autreDonnee TEXT,
+	nomFichierPhylo VARCHAR(100) NOT NULL,
+	nomFichierAlignement VARCHAR(100) NOT NULL,
+	outil VARCHAR(100) NOT NULL,
 	annotation TEXT,
 
 	PRIMARY KEY (idGene,idUser),

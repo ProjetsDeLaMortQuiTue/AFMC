@@ -32,8 +32,10 @@
 		$answerProt->execute(array($gene));
 
 		//Préparation de la requête sql pour récupérer les phyolgenie associés au gène
-		$answerPhylo = $bdd->prepare('SELECT idUser,fichier,autreDonnee,annotation FROM Phylogenie WHERE idGene = ?');
+		$answerPhylo = $bdd->prepare('SELECT u.idUser,alias,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE idGene = ? AND ph.idUser=u.idUser;');
 		$answerPhylo->execute(array($gene));
+		echo 'SELECT u.idUser,alias,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE ph.idUser=u.idUser AND idGene = ?; <BR> '.$gene;
+
 
 		//Récupére l'identifiant de l'utilisateur
 		$idUser='';
@@ -51,7 +53,7 @@
 		<!-- Contenu de la page -->
 		<section>
 		<?php
-			echo "<h1>Données présentent sur le gène</h1>";
+			echo "<h1>Données présentent pour le gène ".$gene."</h1>";
 		    echo '<TABLE>';
 	        //Affiche les informations sur le gène
 	        while ($data = $answerGene->fetch())
@@ -80,25 +82,27 @@
 		</TABLE>
 		<h1>Données ajoutées par les utilisateurs sur le gène</h1>
 		<?php
-			echo 'Phylogenie possible pour le gène:<BR><TABLE>';
+			echo 'Phylogenie(s) possible pour ce gène:<BR>';
 			//Affiche les phylogenies du le gène
 			$compteurPhylo=0;
 	        while ($data = $answerPhylo->fetch())
 	        {
 	        	$compteurPhylo++;
-				echo "<TR><TD>Fichier: ".$data['fichier']."</TD><TD>autresDonne: ".$data['autreDonnee']."</TD><TD>annotation: ".$data['annotation']."</TD>";
-
-				if ($idUser != '' && $idUser == $data['idUser']){
-					echo "<TD>Modifier (à venir)</TD>";
+	        	echo "<bleu>Utilisateur à l'origine: ";
+	        	if ($idUser != '' && $idUser == $data['idUser']){
+					echo "Vous! Modifier? (à venir)</bleu>";
 				}
-				else{echo "<TD><a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></TD>';}
+				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
+
+				echo "<TABLE><TR><TD>Fichier:</TD><TD>".$data['nomFichierArbre']."</TD></TR><TR><TD>Alignement:</TD><TD>".$data['nomFichierAlignement']."</TD></TR><TR><TD>Outils:</TD><TD>".$data['outil']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
+				echo "</TABLE>";
 	        }
 	        $answerGene->closeCursor();
 	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
 			
 		?>
-		</TABLE><br>
-		<form action=addPhylo.php method="post">
+		<br>
+		<form action=addPhylo.php method="GET">
 			<input type="hidden" name="gene" value=<?php echo $gene ?>>
 			<input type="submit" value="Ajouter une phylogénie">
 		</form>
