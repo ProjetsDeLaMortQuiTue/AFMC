@@ -34,7 +34,6 @@
 		//Préparation de la requête sql pour récupérer les phyolgenie associés au gène
 		$answerPhylo = $bdd->prepare('SELECT u.idUser,alias,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE idGene = ? AND ph.idUser=u.idUser;');
 		$answerPhylo->execute(array($gene));
-		echo 'SELECT u.idUser,alias,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE ph.idUser=u.idUser AND idGene = ?; <BR> '.$gene;
 
 
 		//Récupére l'identifiant de l'utilisateur
