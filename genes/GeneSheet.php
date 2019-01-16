@@ -34,6 +34,14 @@
 		//Préparation de la requête sql pour récupérer les phyolgenie associés au gène
 		$answerPhylo = $bdd->prepare('SELECT idUser,fichier,autreDonnee,annotation FROM Phylogenie WHERE idGene = ?');
 		$answerPhylo->execute(array($gene));
+
+		//Récupére l'identifiant de l'utilisateur
+		$idUser='';
+		if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
+			$answerUser = $bdd->prepare('SELECT idUser FROM User WHERE alias = ?');
+			$answerUser->execute(array($_SESSION['user']));
+			while ($data = $answerUser->fetch()){$idUser=$data['idUser'];}
+		}
 	?>
   <body>
 	<?php include("../Title2.php"); ?>
@@ -78,7 +86,12 @@
 	        while ($data = $answerPhylo->fetch())
 	        {
 	        	$compteurPhylo++;
-				echo "<TR><TD>Fichier: ".$data['fichier']."</TD><TD>autresDonne: ".$data['autreDonnee']."</TD><TD>annotation: ".$data['annotation']."</TD><TD><a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></TD>';
+				echo "<TR><TD>Fichier: ".$data['fichier']."</TD><TD>autresDonne: ".$data['autreDonnee']."</TD><TD>annotation: ".$data['annotation']."</TD>";
+
+				if ($idUser != '' && $idUser == $data['idUser']){
+					echo "<TD>Modifier (à venir)</TD>";
+				}
+				else{echo "<TD><a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></TD>';}
 	        }
 	        $answerGene->closeCursor();
 	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
