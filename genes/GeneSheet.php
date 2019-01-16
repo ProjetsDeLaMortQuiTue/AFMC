@@ -93,7 +93,9 @@
 				}
 				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
 
-				echo "<TABLE><TR><TD>Arbre:</TD><TD>".$data['nomFichierArbre']."</TD></TR><TR><TD>Alignement:</TD><TD>".$data['nomFichierAlignement']."</TD></TR><TR><TD>Outils:</TD><TD>".$data['outil']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
+				echo "<TABLE><TR><TD>Arbre:</TD><TD><a href=".$data['nomFichierArbre']." download>Télécharger l'arbre</a></TD></TR>
+				<TR><TD>Alignement:</TD><TD><a href=".$data['nomFichierAlignement']." download>Télécharger l'alignement</a></TD></TR>
+				<TR><TD>Outils:</TD><TD>".$data['outil']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
 				echo "</TABLE>";
 	        }
 	        $answerPhylo->closeCursor();

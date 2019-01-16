@@ -81,8 +81,8 @@
 				}
 				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
 
-				echo "<TABLE><TR><TD>Fichier Structure:</TD><TD>".$data['nomFichier']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
-				echo "</TABLE>";
+				echo '<TABLE><TR><TD>Fichier Structure:</TD><TD><a href='.$data['nomFichier'].' download>Télécharger la structure</a></TD></TR><TR><TD>Annotation:</TD><TD>'.$data['annotation'].'</TD></TR>';
+				echo '</TABLE>';
 	        }
 	        $answerStruc->closeCursor();
 	        if ($compteurStruc==0){echo "Aucune structure n'est disponible pour cette proteine";}
