@@ -34,6 +34,7 @@
 			$answer->execute(array($user));
 			
 			//Affiche les résultats de la requête dans un tableau
+			echo "<h1>Informations de l'utilisateur:</h1>";
 			echo "<TABLE>";
 			while ($data = $answer->fetch())
 			{
@@ -45,9 +46,44 @@
 	            '<TR><TD>'.'Date de creation: '.'</TD><TD>'.$data['dateDeCreation'].'</TD></TR>'.
 	            '<TR><TD>'.'Date de dernière connexion: '.'</TD><TD>'.$data['dateDerniereCo'].'</TD></TR>';
 			}
-			
 			$answer->closeCursor();
 			echo "</TABLE>";
+
+			//Préparation de la requête sql pour récupérer les phyolgenies publiés par l'utilisateur
+			$answerPhylo = $bdd->prepare('SELECT idGene,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE ph.idUser=u.idUser AND u.alias=?');
+			$answerPhylo->execute(array($user));
+			
+			echo '<h1>Phylogenie(s) publiés:</h1>';
+			$compteurPhylo=0;
+	        while ($data = $answerPhylo->fetch())
+	        {
+	        	$compteurPhylo++;
+	        	echo "<bleu>Pour le gène ".$data['idGene'].":</bleu>";
+				echo "<TABLE><TR><TD>Arbre:</TD><TD><a href=../genes/".$data['nomFichierArbre'].">Voir le fichier</a></TD></TR>
+				<TR><TD>Alignement:</TD><TD><a href=../genes/".$data['nomFichierAlignement'].">Voir le fichier</a></TD></TR>
+				<TR><TD>Outils:</TD><TD>".$data['outil']."</TD></TR>
+				<TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
+				echo "</TABLE>";
+	        }
+	        $answerPhylo->closeCursor();
+	        if ($compteurPhylo==0){echo "Vous n'avez publié aucune phylogénie";}
+
+
+	        //Préparation de la requête sql pour récupérer les structures publiés par l'utilisateur
+			$answerStruc = $bdd->prepare('SELECT idProt,nomFichier,annotation FROM Structure s JOIN User u WHERE s.idUser=u.idUser AND u.alias=?');
+			$answerStruc->execute(array($user));
+
+			echo '<h1>Structure(s) publiés:</h1>';
+	        $compteurStruc=0;
+	        while ($data = $answerStruc->fetch())
+	        {
+	        	$compteurStruc++;
+	        	echo "<bleu>Pour la proteine ".$data['idProt'].":</bleu>";
+				echo '<TABLE><TR><TD>Fichier Structure:</TD><TD><a href='.$data['nomFichier'].'>Voir le fichier</a></TD></TR><TR><TD>Annotation:</TD><TD>'.$data['annotation'].'</TD></TR>';
+				echo '</TABLE>';
+	        }
+	        $answerStruc->closeCursor();
+	        if ($compteurStruc==0){echo "Vous n'avez publié aucune structure";}
 		?>
 		<form action="LogIn.php" method="post">
 			<input type="submit" value="Se déconnecter">
