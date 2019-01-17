@@ -91,7 +91,7 @@
 	        while ($data = $answerPhylo->fetch())
 	        {
 	        	$compteurPhylo++;
-	        	echo "<bleu>Utilisateur à l'origine: ";
+	        	echo "<bleu>Ajouter par: ";
 	        	if ($idUser != '' && $idUser == $data['idUser']){
 					echo "Vous! Modifier? (à venir)</bleu>";
 				}
@@ -119,7 +119,7 @@
 	        while ($data = $answerKEGG->fetch())
 	        {
 	        	$compteurKEGG++;
-	        	echo "<bleu>Utilisateur à l'origine: ";
+	        	echo "<bleu>Ajouter par: ";
 	        	if ($idUser != '' && $idUser == $data['idUser']){
 					echo "Vous! Modifier? (à venir)</bleu>";
 				}

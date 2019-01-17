@@ -39,6 +39,9 @@
 			$answerStruc= $bdd->prepare('SELECT u.idUser,alias,nomFichier,annotation FROM Structure s JOIN User u WHERE idProt = ? AND s.idUser=u.idUser;');
 			$answerStruc->execute(array($prot));
 
+			//Préparation de la requête sql pour récupérer les id UniProt associé à cette proteines 
+			$answerUniProt= $bdd->prepare('SELECT u.idUser,alias,codeUniProt FROM UniProt un JOIN User u WHERE idProt = ? AND un.idUser=u.idUser;');
+			$answerUniProt->execute(array($prot));
 
 			//Récupére l'identifiant de l'utilisateur
 			$idUser='';
@@ -75,7 +78,7 @@
 	        while ($data = $answerStruc->fetch())
 	        {
 	        	$compteurStruc++;
-	        	echo "<bleu>Utilisateur à l'origine: ";
+	        	echo "<bleu>Ajouter par: ";
 	        	if ($idUser != '' && $idUser == $data['idUser']){
 					echo "Vous! Modifier? (à venir)</bleu>";
 				}
@@ -92,7 +95,32 @@
 			<input type="hidden" name="prot" value=<?php echo $prot ?>>
 			<input type="submit" value="Ajouter une structure">
 		</form>
-      	</section>
+		<br>
+		<?php
+			echo 'Identifiant(s) Uniprot possible pour cette proteine:<BR>';
+			//Affiche les phylogenies du le gène
+			$compteurUniProt=0;
+	        while ($data = $answerUniProt->fetch())
+	        {
+	        	$compteurUniProt++;
+	        	echo "<bleu>Ajouter par: ";
+	        	if ($idUser != '' && $idUser == $data['idUser']){
+					echo "Vous! Modifier? (à venir)</bleu>";
+				}
+				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
+
+				echo "<TABLE><TR><TD>Identifiant Uniprot:</TD><TD>".$data['codeUniProt']."</TD></TR>
+				<TR><TD>Lien:</TD><TD><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt'].">Visiter le site UniProt</a></TD></TR>";
+				echo "</TABLE>";
+	        }
+	        $answerUniProt->closeCursor();
+	        if ($compteurUniProt==0){echo "Aucun identifant UniProt n'est disponible pour cette proteine";}
+			
+		?>
+		<form action=addUniProt.php method="GET">
+			<input type="hidden" name="prot" value=<?php echo $prot ?>>
+			<input type="submit" value="Ajouter un identifiant UniProt">
+		</form>
         </section>
 	</div>
 	<?php include("../Footer.php"); ?>

@@ -227,6 +227,22 @@ CREATE TABLE IF NOT EXISTS KEGG(
 ENGINE=INNODB;
 INSERT INTO KEGG VALUES ('BC1G_00001',3,'BCIN_01g00010','bfu');
 
+CREATE TABLE IF NOT EXISTS UniProt(
+	idProt CHAR(10),
+	idUser int unsigned,
+	codeUniProt VARCHAR(100),
+
+	PRIMARY KEY (idProt,idUser),
+	CONSTRAINT fk_idProtUniProt
+        FOREIGN KEY (idProt)
+        REFERENCES Proteine(idProt),
+	CONSTRAINT fk_idUserUniProt
+        FOREIGN KEY (idUser)
+        REFERENCES User(idUser)
+)
+ENGINE=INNODB;
+INSERT INTO UniProt VALUES ('BC1T_00001',3,'B9V456');
+
 
 DROP TABLE Structure;
 CREATE TABLE IF NOT EXISTS Structure(
