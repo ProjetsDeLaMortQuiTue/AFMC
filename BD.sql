@@ -210,16 +210,15 @@ CREATE TABLE IF NOT EXISTS PathwayReaction(
 ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS KEGG(
-	idProt CHAR(10),
+	idGene CHAR(10),
 	idUser int unsigned,
-	codeProt VARCHAR(100),
-	autreDonnee TEXT,
-	annotation TEXT,
+	codeGene VARCHAR(100),
+	organisme CHAR(3),
 
-	PRIMARY KEY (idProt,idUser),
-	CONSTRAINT fk_idProtKEGG
-        FOREIGN KEY (idProt)
-        REFERENCES Proteine(idProt),
+	PRIMARY KEY (idGene,idUser),
+	CONSTRAINT fk_idGeneKEGG
+        FOREIGN KEY (idGene)
+        REFERENCES Gene(idGene),
 	CONSTRAINT fk_idUserKEGG
         FOREIGN KEY (idUser)
         REFERENCES User(idUser)

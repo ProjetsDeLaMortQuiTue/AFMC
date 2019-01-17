@@ -35,6 +35,10 @@
 		$answerPhylo = $bdd->prepare('SELECT u.idUser,alias,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE idGene = ? AND ph.idUser=u.idUser;');
 		$answerPhylo->execute(array($gene));
 
+		//Préparation de la requête sql pour récupérer les identifiant KEGG associés au gènes
+		$answerKEGG = $bdd->prepare('SELECT u.idUser,alias,codeGene,organisme FROM KEGG k JOIN User u WHERE idGene = ? AND k.idUser=u.idUser;');
+		$answerKEGG->execute(array($gene));
+
 
 		//Récupére l'identifiant de l'utilisateur
 		$idUser='';
@@ -64,7 +68,7 @@
 	            '<TR><TD>'.'Fin: '.'</TD><TD>'.$data['finGene'].'</TD></TR>'.
 	            '<TR><TD>'.'Brin: '.'</TD><TD>'.$data['brin'].'</TD></TR>'.
 	            '<TR><TD>'.'Numéro du chromosome: '.'</TD><TD>'.$data['numChromosome'].'</TD></TR>'.
-	            '<TR><TD>'.'Sequence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqGene'].'</TEXTAREA></TD></TR>';
+	            '<TR><TD>'.'Sequence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqGene'].'</TEXTAREA><br><a href=Fasta/'.$gene.'.fasta download>Télécharger le fichier fasta</a></TD></TR>';
 	        }
 			$answerGene->closeCursor();
 
@@ -100,14 +104,39 @@
 	        }
 	        $answerPhylo->closeCursor();
 	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
-			
+	        ?>
+	        <br>
+			<form action=addPhylo.php method="GET">
+				<input type="hidden" name="gene" value=<?php echo $gene ?>>
+				<input type="submit" value="Ajouter une phylogénie">
+			</form>
+	      	<br>
+	        <?php
+
+			echo 'Identifiant(s) KEGG possibles pour ce gène:<BR>';
+			//Affiche les phylogenies du le gène
+			$compteurKEGG=0;
+	        while ($data = $answerKEGG->fetch())
+	        {
+	        	$compteurKEGG++;
+	        	echo "<bleu>Utilisateur à l'origine: ";
+	        	if ($idUser != '' && $idUser == $data['idUser']){
+					echo "Vous! Modifier? (à venir)</bleu>";
+				}
+				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
+
+				echo "<TABLE><TR><TD>Identifiant KEGG:</TD><TD>".$data['codeGene']."</TD></TR>
+				<TR><TD>Lien:</TD><TD><a href=https://www.genome.jp/dbget-bin/www_bget?".$data['organisme'].":".$data['codeGene'].">Visiter le site KEGG</a></TD></TR>";
+				echo "</TABLE>";
+	        }
+	        $answerKEGG->closeCursor();
+	        if ($compteurKEGG==0){echo "Aucun identifiant KEGG n'est proposé pour ce gène";}
 		?>
-		<br>
-		<form action=addPhylo.php method="GET">
-			<input type="hidden" name="gene" value=<?php echo $gene ?>>
-			<input type="submit" value="Ajouter une phylogénie">
-		</form>
-      	</section>
+		<form action=addKEGG.php method="GET">
+				<input type="hidden" name="gene" value=<?php echo $gene ?>>
+				<input type="submit" value="Ajouter un identifiant KEGG">
+			</form>
+		</section>
 	</div>
 	
 	<?php include("../Footer.php"); ?>

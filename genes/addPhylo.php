@@ -4,7 +4,7 @@
 <html lang="fr">
 <?php
 	session_start();
-	$_SESSION['currentPage']="gene";
+	$_SESSION['currentPage']="genes";
 ?>
 <head>
     <meta charset="UTF-8">
@@ -21,10 +21,12 @@
 	else{$gene='INCONNU';}
 	
 	//Récupére l'id de l'utilisateur connecté
-	include("../DatabaseConnection.php");
-	$answer=$bdd->prepare('SELECT idUser FROM User where alias=?');
-	$answer->execute(array($_SESSION['user']));
-	while ($data = $answer->fetch()){$idUser=$data['idUser'];}
+	if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
+		include("../DatabaseConnection.php");
+		$answer=$bdd->prepare('SELECT idUser FROM User where alias=?');
+		$answer->execute(array($_SESSION['user']));
+		while ($data = $answer->fetch()){$idUser=$data['idUser'];}
+	}
 
 	// Si le formulaire a déja été remplis
 	$erreur='';
