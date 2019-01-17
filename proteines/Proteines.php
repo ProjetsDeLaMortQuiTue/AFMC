@@ -21,7 +21,7 @@
 
 			//PROTEINE ENTIEREMENT ANNOTE
 			//Requête sql pour récupérer tous les proteines qui sont annotés
-			$answerProtsAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN UniProt un JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND p.idProt=un.idProt AND p.idProt=s.idProt');
+			$answerProtsAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN PathwayReaction pr JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND p.idProt=pr.idProt AND p.idProt=s.idProt');
 			$answerProtsAnnoté->execute(array($_SESSION['idOrga']));
 			
 			//Récupére les proetines entirement annoté dans une liste
@@ -39,7 +39,7 @@
 			}
 
 			//Requête sql pour récupérer les proteines qui sont annotés en partie
-			$answerProtsEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN UniProt un JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND (p.idProt=un.idProt OR p.idProt=s.idProt)'.$SQLProtsAnnote.';');
+			$answerProtsEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN PathwayReaction pr JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND (p.idProt=pr.idProt OR p.idProt=s.idProt)'.$SQLProtsAnnote.';');
 			$answerProtsEnPartieAnnoté->execute(array_merge(array($_SESSION['idOrga']),$protsAnnoté));
 
 			//Récupére les proteines en partie annoté dans une liste
@@ -49,7 +49,7 @@
 			$nbProtsEnPartieAnnoté=count($protsEnPartieAnnoté);
 
 			//PROTEINE NON ANNOTE
-			//Prépare la liste des proteines à exclure (les entiérement annoté + les en partie annoté).
+			//Prépare la liste des protéines à exclure (les entiérement annoté + les en partie annoté).
 			$SQLProtsExclus='';
 			if ( ($nbProtsAnnoté + $nbProtsEnPartieAnnoté) > 0){
 				$SQLProtsExclus=' AND p.idProt NOT IN (?';
@@ -83,13 +83,13 @@
 			<input type="submit" value="Faire une recherche plus détaillé">
 		</form>
 		<br>
-		 Nombre de proteines non annotés: <? echo $nbProtsNonAnnoté ?> <br>
-		 Nombre de proteines partiellement annotés: <? echo $nbProtsEnPartieAnnoté ?> <br>
-		 Nombre de proteines non annotés: <? echo $nbProtsAnnoté ?> <br>
+		 Nombre de protéines non-annotées: <? echo $nbProtsNonAnnoté ?> <br>
+		 Nombre de protéines partiellement annotées: <? echo $nbProtsEnPartieAnnoté ?> <br>
+		 Nombre de protéines annotées: <? echo $nbProtsAnnoté ?> <br>
 		 <br>
 		<!-- AFFICHAGE DES PROTEINES DANS LE TABLEAU -->
-		<TABLE BORDER="1" style="text-align:center">
-		<TR><TD>Proteine non annotés</TD><TD>Proteine partiellement annotés</TD><TD>Proteine entièrement annotés</TD></TR>
+		<TABLE BORDER="1" style="text-align:center" cellspacing="0">
+		<TR><TD bgcolor="#81CCB8">Protéines non-annotées</TD><TD bgcolor="#81CCB8">Protéines partiellement annotées</TD><TD bgcolor="#81CCB8">Protéines entièrement annotées</TD></TR>
 		<?php
 			for($i=0; $i<max($nbProtsAnnoté,$nbProtsEnPartieAnnoté,$nbProtsNonAnnoté) ; $i++){
 				echo "<TR>";
