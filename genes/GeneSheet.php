@@ -110,10 +110,9 @@
 						<TD>".$data['annotation']."</TD>
 						<TD align=center>".$proprietaire."</TD>
 						<TD align=center>".$modif_ou_contact."</TD></TR>";
-				echo "</TABLE>";
-				
-				
 	        }
+	        echo "</TABLE>";
+	        
 	        $answerPhylo->closeCursor();
 	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
 	        ?>
@@ -147,8 +146,8 @@
 							<TD align=center><a href=https://www.genome.jp/dbget-bin/www_bget?".$data['organisme'].":".$data['codeGene'].">Visiter le site KEGG</a></TD>
 							<TD align=center>".$proprietaire."</TD>
 							<TD align=center>".$modif_ou_contact."</TD></TR>";
-				echo "</TABLE>";
 	        }
+	        echo "</TABLE>";
 	        $answerKEGG->closeCursor();
 	        if ($compteurKEGG==0){echo "Aucun identifiant KEGG n'est proposé pour ce gène";}
 		?>
