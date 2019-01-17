@@ -28,6 +28,27 @@ INSERT INTO Espece
 VALUES (1,'Botrytis Cinerea',4534,16448,42635,16448,16448,42,'B05.10');
 
 
+CREATE TABLE IF NOT EXISTS Contigue (
+	idContig CHAR(12) NOT NULL,
+	numContig SMALLINT,
+	numSuperContig DECIMAL(5,3),
+	debContig INT,
+	finContig INT,
+	tailleContig INT,
+	seqContig TEXT(65536),
+	idEsp SMALLINT UNSIGNED NOT NULL,
+	PRIMARY KEY (idContig),
+	CONSTRAINT fk_idEspContigue
+        FOREIGN KEY (idEsp)
+        REFERENCES Espece(idEsp)
+)
+ENGINE=INNODB;
+
+LOAD DATA LOCAL INFILE '/opt/lampp/htdocs/AFMC/botrytis_cinerea/contig.csv'
+INTO TABLE Contigue
+FIELDS TERMINATED BY ';' ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
 CREATE TABLE IF NOT EXISTS Gene (
 	idGene CHAR(10) NOT NULL,
 	nomProtGene VARCHAR(100),
@@ -37,6 +58,7 @@ CREATE TABLE IF NOT EXISTS Gene (
 	brin CHAR(1),
 	numChromosome INT UNSIGNED,
 	seqGene TEXT,
+	nomFichierFasta VARCHAR(100) NOT NULL,
 	idEsp SMALLINT UNSIGNED NOT NULL,
 	PRIMARY KEY (idGene),
 	CONSTRAINT fk_idEspGene
@@ -139,9 +161,8 @@ VALUES (1,'MeilleurWebmaster','topmoumoute','coralie.rohmer@hotmail.fr','Mlle','
 CREATE TABLE IF NOT EXISTS Phylogenie(
 	idGene CHAR(10) NOT NULL,
 	idUser int unsigned,
-	nomFichierPhylo VARCHAR(100) NOT NULL,
-	nomFichierAlignement VARCHAR(100) NOT NULL,
-	outil VARCHAR(100) NOT NULL,
+	fichier VARCHAR(100),
+	autreDonnee TEXT,
 	annotation TEXT,
 
 	PRIMARY KEY (idGene,idUser),
@@ -153,12 +174,12 @@ CREATE TABLE IF NOT EXISTS Phylogenie(
         REFERENCES User(idUser)
 )
 ENGINE=INNODB;
-INSERT INTO Phylogenie (idGene,idUser,nomFichierArbre,nomFichierAlignement,outil,annotation) VALUES ('BC1G_00001',1,'Phylogenie/BC1G_00001/Tree_BC1G_00001_1.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_1.fasta','Mon oeil','Rien'),('BC1G_00001',3,'Phylogenie/BC1G_00001/Tree_BC1G_00001_3.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_3.fasta','Phylogeny.fr','C est chiant à faire');
 
 CREATE TABLE IF NOT EXISTS Structure(
 	idProt CHAR(10),
 	idUser int unsigned,
-	nomFichier VARCHAR(100),
+	fichier VARCHAR(100),
+	autreDonnee TEXT,
 	annotation TEXT,
 
 	PRIMARY KEY (idProt,idUser),
@@ -204,3 +225,49 @@ CREATE TABLE IF NOT EXISTS KEGG(
         REFERENCES User(idUser)
 )
 ENGINE=INNODB;
+
+DROP TABLE Structure;
+CREATE TABLE IF NOT EXISTS Structure(
+  idProt CHAR(10),
+  idUser int unsigned,
+  nomFichier VARCHAR(100),
+  annotation TEXT,
+
+  PRIMARY KEY (idProt,idUser),
+  CONSTRAINT fk_idProtStruc
+        FOREIGN KEY (idProt)
+        REFERENCES Proteine(idProt),
+  CONSTRAINT fk_idUserStruc
+        FOREIGN KEY (idUser)
+        REFERENCES User(idUser)
+)
+ENGINE=INNODB;
+INSERT INTO Structure (idProt,idUser,nomFichier,annotation) VALUES ('BC1T_00004',1,'Structure/BC1T_00004/Struc_BC1T_00004_1.pdb','Easy');
+
+DROP TABLE Phylogenie;
+CREATE TABLE IF NOT EXISTS Phylogenie(
+  idGene CHAR(10) NOT NULL,
+  idUser int unsigned,
+  nomFichierPhylo VARCHAR(100) NOT NULL,
+  nomFichierAlignement VARCHAR(100) NOT NULL,
+  outil VARCHAR(100) NOT NULL,
+  annotation TEXT,
+
+  PRIMARY KEY (idGene,idUser),
+  CONSTRAINT fk_idGenePhylo
+        FOREIGN KEY (idGene)
+        REFERENCES Gene(idGene),
+  CONSTRAINT fk_idUserPhylo
+        FOREIGN KEY (idUser)
+        REFERENCES User(idUser)
+)
+ENGINE=INNODB;
+INSERT INTO Phylogenie (idGene,idUser,nomFichierPhylo,nomFichierAlignement,outil,annotation) VALUES ('BC1G_00001',1,'Phylogenie/BC1G_00001/Tree_BC1G_00001_1.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_1.fasta','Mon oeil','Rien'),('BC1G_00001',3,'Phylogenie/BC1G_00001/Tree_BC1G_00001_3.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_3.fasta','Phylogeny.fr','Cest chiant à faire');
+
+
+
+
+
+
+
+
