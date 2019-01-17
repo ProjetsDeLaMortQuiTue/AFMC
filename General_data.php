@@ -51,7 +51,8 @@
 	        while ($data = $answerEspece->fetch())
 	        {
 	        	$_SESSION['idOrga'] = $data['idEsp']; //conserve l'identifiant de l'espèce en cours
-	            echo '<TR><TD>'.'Nom de l\'espece: '.'</TD><TD>'.$data['nomEsp'].'</TD></TR>'.
+	            echo
+	            '<TR><TD rowspan=7><img src="./ImagesEspeces/botrytis_cinerea.jpg" /> </TD><TD>'.'Nom de l\'espece: '.'</TD><TD>'.$data['nomEsp'].'</TD></TR>'.
 	            /*'<TR><TD>'.'Nombres de contigues:  '.'</TD><TD>'.$data['nbContigs'].'</TD></TR>'.*/
 	            '<TR><TD>'.'Nombres de gènes: '.'</TD><TD>'.$data['nbGenes'].'</TD></TR>'.
 	            '<TR><TD>'.'Nombres de PFAM: '.'</TD><TD>'.$data['nbPFAM'].'</TD></TR>'.
