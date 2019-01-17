@@ -72,7 +72,7 @@
 		?>
 			<h1>Données ajoutées par les utilisateurs sur la proteines</h1>
 		<?php
-			echo 'Structure(s) possible pour cette proteine:<BR>';
+			echo 'Structure(s) possible pour cette protéine:<BR>';
 			//Affiche les phylogenies du le gène
 			$compteurStruc=0;
 	        while ($data = $answerStruc->fetch())
@@ -91,7 +91,7 @@
 					$modif_ou_contact= "<a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
 				}
 				
-				echo "<TR><TD align=center><a href=".$data['nomFichier']."download>Télécharger la structure</a></TD>
+				echo "<TR><TD align=center><a href=".$data['nomFichier']."download>Télécharger</a></TD>
 						<TD>".$data['annotation']."</TD>
 						<TD align=center>".$proprietaire."</TD>
 						<TD align=center>".$modif_ou_contact."</TD></TR>";
@@ -107,7 +107,7 @@
 		</form>
 		<br>
 		<?php
-			echo 'Identifiant(s) Uniprot possible pour cette proteine:<BR>';
+			echo 'Identifiant(s) Uniprot possible pour cette protéine:<BR>';
 			//Affiche les phylogenies du le gène
 			$compteurUniProt=0;
 	        while ($data = $answerUniProt->fetch())
@@ -126,7 +126,7 @@
 				}
 				
 				echo "<TR><TD align=center>".$data['codeUniProt']."</TD>
-							<TD align=center><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt'].">Visiter le site UniProt</a></TD>
+							<TD align=center><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt'].">UniProt</a></TD>
 							<TD align=center>".$proprietaire."</TD>
 							<TD align=center>".$modif_ou_contact."</TD></TR>";
 	        }
