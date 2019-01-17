@@ -92,7 +92,7 @@
 	        {
 	        	$compteurPhylo++;
 	        	if ($compteurPhylo == '1'){
-					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#F6A33D\">Arbres</TD><TD align=center bgcolor=\"#F6A33D\">Alignements</TD><TD align=center bgcolor=\"#F6A33D\">Outils</TD><TD width=30% bgcolor=\"#F6A33D\">Annotations</TD><TD align=center bgcolor=\"#F6A33D\">Ajouté par</TD><TD align=center bgcolor=\"#F6A33D\"></TD></TR>";
+					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#F6A33D\">Arbres</TD><TD align=center bgcolor=\"#F6A33D\">Alignements</TD><TD align=center bgcolor=\"#F6A33D\">Outils</TD><TD align=center bgcolor=\"#F6A33D\">Annotations</TD><TD align=center bgcolor=\"#F6A33D\">Ajouté par</TD><TD align=center bgcolor=\"#F6A33D\"></TD></TR>";
 				}
 				
 				if ($idUser != '' && $idUser == $data['idUser']){
@@ -104,8 +104,8 @@
 					$modif_ou_contact= " <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
 				}
 				
-	        	echo "<TR><TD align=center><a href=".$data['nomFichierArbre']." download>Télécharger l'arbre</a></TD>
-						<TD align=center><a href=".$data['nomFichierAlignement']."download>Télécharger l'alignement</a></TD>
+	        	echo "<TR><TD align=center><a href=".$data['nomFichierArbre']." download>Télécharger</a></TD>
+						<TD align=center><a href=".$data['nomFichierAlignement']."download>Télécharger</a></TD>
 						<TD align=center>".$data['outil']."</TD>
 						<TD>".$data['annotation']."</TD>
 						<TD align=center>".$proprietaire."</TD>
@@ -143,7 +143,7 @@
 				}
 				
 				echo "<TR><TD align=center>".$data['codeGene']."</TD>
-							<TD align=center><a href=https://www.genome.jp/dbget-bin/www_bget?".$data['organisme'].":".$data['codeGene'].">Visiter le site KEGG</a></TD>
+							<TD align=center><a href=https://www.genome.jp/dbget-bin/www_bget?".$data['organisme'].":".$data['codeGene'].">KEGG</a></TD>
 							<TD align=center>".$proprietaire."</TD>
 							<TD align=center>".$modif_ou_contact."</TD></TR>";
 	        }
