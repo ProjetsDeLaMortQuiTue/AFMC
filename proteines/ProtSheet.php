@@ -57,10 +57,10 @@
 	        //Affiche les résultats de la requête dans un tableau
 	        while ($data = $answer->fetch())
 	        {
-	            echo '<TR><TD>'.'Identifiant de la proteine: '.'</TD><TD>'.$data['idProt'].'</TD></TR>'.
+	            echo '<TR><TD>'.'Identifiant de la protéine: '.'</TD><TD>'.$data['idProt'].'</TD></TR>'.
 	            '<TR><TD>'.'Nom:  '.'</TD><TD>'.$data['nomProt'].'</TD></TR>'.
 	            '<TR><TD>'.'Taille: '.'</TD><TD>'.$data['tailleProt'].'</TD></TR>'.
-	            '<TR><TD>'.'Sequence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqProt'].'</TEXTAREA></TD></TR>'.
+	            '<TR><TD>'.'Séquence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqProt'].'</TEXTAREA></TD></TR>'.
 	            '<TR><TD>'.'Gène associé: '.'</TS><TD><a href=../genes/GeneSheet.php?gene='.$data['idGene'].' class=\"nav\">'.$data['idGene'].'</a><br></TD></TR>';
 	        }
 			$answer->closeCursor();
@@ -70,7 +70,7 @@
 	    	//Affiche le lien vers le transcript correspondant
 			echo '<a href=TransSheet.php?trans='.$prot.' class=\"nav\">Voir le transcript'.'</a>';
 		?>
-			<h1>Données ajoutées par les utilisateurs sur la proteines</h1>
+			<h1>Données ajoutées par les utilisateurs sur la protéine</h1>
 		<?php
 			echo 'Structure(s) possible pour cette protéine:<BR>';
 			//Affiche les phylogenies du le gène
