@@ -95,8 +95,8 @@
 						<TD>".$data['annotation']."</TD>
 						<TD align=center>".$proprietaire."</TD>
 						<TD align=center>".$modif_ou_contact."</TD></TR>";
-				echo "</TABLE>";
 	        }
+	        echo "</TABLE>";
 	        $answerStruc->closeCursor();
 	        if ($compteurStruc==0){echo "Aucune structure n'est disponible pour cette proteine";}
 			
@@ -129,8 +129,8 @@
 							<TD align=center><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt'].">Visiter le site UniProt</a></TD>
 							<TD align=center>".$proprietaire."</TD>
 							<TD align=center>".$modif_ou_contact."</TD></TR>";
-				echo "</TABLE>";
 	        }
+	        echo "</TABLE>";
 	        $answerUniProt->closeCursor();
 	        if ($compteurUniProt==0){echo "Aucun identifant UniProt n'est disponible pour cette proteine";}
 			
