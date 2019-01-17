@@ -124,7 +124,7 @@
 	      	<br>
 	        <?php
 
-			echo '<u>Identifiant(s) KEGG possibles pour ce gène:</u><BR><BR>';
+			echo '<u>Identifiant(s) KEGG possibles(s) pour ce gène:</u><BR><BR>';
 			//Affiche les phylogenies du le gène
 			$compteurKEGG=0;
 	        while ($data = $answerKEGG->fetch())
