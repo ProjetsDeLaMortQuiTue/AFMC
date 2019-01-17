@@ -56,7 +56,7 @@
 		<!-- Contenu de la page -->
 		<section>
 		<?php
-			echo "<h1>Données présentent pour le gène ".$gene."</h1>";
+			echo "<h1>Données présentes pour le gène ".$gene."</h1>";
 		    echo '<TABLE>';
 	        //Affiche les informations sur le gène
 	        while ($data = $answerGene->fetch())
@@ -68,11 +68,11 @@
 	            '<TR><TD>'.'Fin: '.'</TD><TD>'.$data['finGene'].'</TD></TR>'.
 	            '<TR><TD>'.'Brin: '.'</TD><TD>'.$data['brin'].'</TD></TR>'.
 	            '<TR><TD>'.'Numéro du chromosome: '.'</TD><TD>'.$data['numChromosome'].'</TD></TR>'.
-	            '<TR><TD>'.'Sequence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqGene'].'</TEXTAREA><br><a href=Fasta/'.$gene.'.fasta download>Télécharger le fichier fasta</a></TD></TR>';
+	            '<TR><TD>'.'Séquence: '.'</TD><TD><TEXTAREA rows=6 cols=60 readonly="readonly">'.$data['seqGene'].'</TEXTAREA><br><a href=Fasta/'.$gene.'.fasta download>Télécharger le fichier fasta</a></TD></TR>';
 	        }
 			$answerGene->closeCursor();
 
-			echo '<TR><TD>Proteine(s) issus du gène:</TD><TD>';
+			echo '<TR><TD>Protéine(s) issue(s) du gène:</TD><TD>';
 
 	        //Affiche les proteines issus du gene
 	        while ($data = $answerProt->fetch())
@@ -85,7 +85,7 @@
 		</TABLE>
 		<h1>Données ajoutées par les utilisateurs sur le gène</h1>
 		<?php
-			echo '<u>Phylogenie(s) possible pour ce gène:</u><BR><BR>';
+			echo '<u>Phylogénie(s) possible(s) pour ce gène:</u><BR><BR>';
 			//Affiche les phylogenies du gène
 			$compteurPhylo=0;
 	        while ($data = $answerPhylo->fetch())
