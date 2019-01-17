@@ -78,14 +78,24 @@
 	        while ($data = $answerStruc->fetch())
 	        {
 	        	$compteurStruc++;
-	        	echo "<bleu>Ajouter par: ";
-	        	if ($idUser != '' && $idUser == $data['idUser']){
-					echo "Vous! Modifier? (à venir)</bleu>";
+	        	if ($compteurStruc == '1'){
+					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#F6A33D\">Fichiers Structure</TD><TD align=center bgcolor=\"#F6A33D\">Alignements</TD></TD><TD align=center bgcolor=\"#F6A33D\">Ajoutés par</TD><TD align=center bgcolor=\"#F6A33D\"></TD></TR>";
 				}
-				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
-
-				echo '<TABLE><TR><TD>Fichier Structure:</TD><TD><a href='.$data['nomFichier'].' download>Télécharger la structure</a></TD></TR><TR><TD>Annotation:</TD><TD>'.$data['annotation'].'</TD></TR>';
-				echo '</TABLE>';
+				
+				if ($idUser != '' && $idUser == $data['idUser']){
+					$proprietaire='Vous-même';
+					$modif_ou_contact='Modifier? (à venir)</bleu>';
+				}
+				else{
+					$proprietaire=$data['alias'];
+					$modif_ou_contact= "<a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
+				}
+				
+				echo "<TR><TD align=center><a href=".$data['nomFichier']."download>Télécharger la structure</a></TD>
+						<TD>".$data['annotation']."</TD>
+						<TD align=center>".$proprietaire."</TD>
+						<TD align=center>".$modif_ou_contact."</TD></TR>";
+				echo "</TABLE>";
 	        }
 	        $answerStruc->closeCursor();
 	        if ($compteurStruc==0){echo "Aucune structure n'est disponible pour cette proteine";}
@@ -103,14 +113,22 @@
 	        while ($data = $answerUniProt->fetch())
 	        {
 	        	$compteurUniProt++;
-	        	echo "<bleu>Ajouter par: ";
-	        	if ($idUser != '' && $idUser == $data['idUser']){
-					echo "Vous! Modifier? (à venir)</bleu>";
+	        	if ($compteurUniProt == '1'){
+					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#40919B\">Identifiants Uniprot</TD><TD align=center bgcolor=\"#40919B\">Liens</TD><TD align=center bgcolor=\"#40919B\">Ajouté par</TD><TD align=center bgcolor=\"#40919B\"></TD></TR>";
 				}
-				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
-
-				echo "<TABLE><TR><TD>Identifiant Uniprot:</TD><TD>".$data['codeUniProt']."</TD></TR>
-				<TR><TD>Lien:</TD><TD><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt'].">Visiter le site UniProt</a></TD></TR>";
+	        	if ($idUser != '' && $idUser == $data['idUser']){
+					$proprietaire='Vous-même';
+					$modif_ou_contact='Modifier? (à venir)</bleu>';
+				}
+				else{
+					$proprietaire=$data['alias'];
+					$modif_ou_contact= " <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
+				}
+				
+				echo "<TR><TD align=center>".$data['codeUniProt']."</TD>
+							<TD align=center><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt'].">Visiter le site UniProt</a></TD>
+							<TD align=center>".$proprietaire."</TD>
+							<TD align=center>".$modif_ou_contact."</TD></TR>";
 				echo "</TABLE>";
 	        }
 	        $answerUniProt->closeCursor();
