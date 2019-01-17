@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS KEGG;
+DROP TABLE IF EXISTS UniProt;
 DROP TABLE IF EXISTS PathwayReaction;
 DROP TABLE IF EXISTS Structure;
 DROP TABLE IF EXISTS Phylogenie;
@@ -159,22 +160,6 @@ VALUES (1,'MeilleurWebmaster','topmoumoute','coralie.rohmer@hotmail.fr','Mlle','
 (2,'RootSuprem','coralieestlameilleur','marine.aglave@u-psud.fr','Mme','Aglave','Marine','Institut Pasteur','2018-09-15','2018-09-16 20:00:00'),
 (3,'Nirvana','chatsupersympa','coralie.rohmer@u-psud.fr','M.','Monsieur','leChat','Institut Félin du Siam','2018-09-15','2018-09-16 20:00:00');
 
-CREATE TABLE IF NOT EXISTS Phylogenie(
-	idGene CHAR(10) NOT NULL,
-	idUser int unsigned,
-	fichier VARCHAR(100),
-	autreDonnee TEXT,
-	annotation TEXT,
-
-	PRIMARY KEY (idGene,idUser),
-	CONSTRAINT fk_idGenePhylo
-        FOREIGN KEY (idGene)
-        REFERENCES Gene(idGene),
-	CONSTRAINT fk_idUserPhylo
-        FOREIGN KEY (idUser)
-        REFERENCES User(idUser)
-)
-ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS Structure(
 	idProt CHAR(10),
@@ -262,11 +247,10 @@ CREATE TABLE IF NOT EXISTS Structure(
 ENGINE=INNODB;
 INSERT INTO Structure (idProt,idUser,nomFichier,annotation) VALUES ('BC1T_00004',1,'Structure/BC1T_00004/Struc_BC1T_00004_1.pdb','Easy');
 
-DROP TABLE Phylogenie;
 CREATE TABLE IF NOT EXISTS Phylogenie(
   idGene CHAR(10) NOT NULL,
   idUser int unsigned,
-  nomFichierPhylo VARCHAR(100) NOT NULL,
+  nomFichierArbre VARCHAR(100) NOT NULL,
   nomFichierAlignement VARCHAR(100) NOT NULL,
   outil VARCHAR(100) NOT NULL,
   annotation TEXT,
@@ -280,7 +264,7 @@ CREATE TABLE IF NOT EXISTS Phylogenie(
         REFERENCES User(idUser)
 )
 ENGINE=INNODB;
-INSERT INTO Phylogenie (idGene,idUser,nomFichierPhylo,nomFichierAlignement,outil,annotation) VALUES ('BC1G_00001',1,'Phylogenie/BC1G_00001/Tree_BC1G_00001_1.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_1.fasta','Mon oeil','Rien'),('BC1G_00001',3,'Phylogenie/BC1G_00001/Tree_BC1G_00001_3.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_3.fasta','Phylogeny.fr','Cest chiant à faire');
+INSERT INTO Phylogenie (idGene,idUser,nomFichierArbre,nomFichierAlignement,outil,annotation) VALUES ('BC1G_00001',1,'Phylogenie/BC1G_00001/Tree_BC1G_00001_1.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_1.fasta','Mon oeil','Rien'),('BC1G_00001',3,'Phylogenie/BC1G_00001/Tree_BC1G_00001_3.tree','Phylogenie/BC1G_00001/Ali_BC1G_00001_3.fasta','Phylogeny.fr','Cest chiant à faire');
 
 
 

@@ -31,15 +31,6 @@
 		//Exécute la requête avec la variable passée en argument ($gene remplace "?")
 		$answerProt->execute(array($gene));
 
-		//Préparation de la requête sql pour récupérer les phyolgenie associés au gène
-		$answerPhylo = $bdd->prepare('SELECT u.idUser,alias,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE idGene = ? AND ph.idUser=u.idUser;');
-		$answerPhylo->execute(array($gene));
-
-		//Préparation de la requête sql pour récupérer les identifiant KEGG associés au gènes
-		$answerKEGG = $bdd->prepare('SELECT u.idUser,alias,codeGene,organisme FROM KEGG k JOIN User u WHERE idGene = ? AND k.idUser=u.idUser;');
-		$answerKEGG->execute(array($gene));
-
-
 		//Récupére l'identifiant de l'utilisateur
 		$idUser='';
 		if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
@@ -86,6 +77,20 @@
 		<h1>Données ajoutées par les utilisateurs sur le gène</h1>
 		<?php
 			echo '<u>Phylogénie(s) possible(s) pour ce gène:</u><BR><BR>';
+
+			//Si l'utilisateur supprime sa phylogénie
+			if (isset($_GET['phylo'])){
+				echo "<red>Suppression de votre phylogénie pour ce gène.</red><br>";
+				$suppressionPhylo = $bdd->prepare('DELETE FROM Phylogenie WHERE idUser=? AND idGene=?;');
+				$suppressionPhylo->execute(array($idUser,$gene));
+				//Supprime les fichiers associés;
+				unlink('Phylogenie/'.$gene.'/Ali_'.$gene.'_'.$idUser.'.fasta');
+				unlink('Phylogenie/'.$gene.'/Tree_'.$gene.'_'.$idUser.'.tree');
+			}
+
+			//Préparation de la requête sql pour récupérer les phyolgenie associés au gène
+			$answerPhylo = $bdd->prepare('SELECT u.idUser,alias,nomFichierArbre,nomFichierAlignement,outil,annotation FROM Phylogenie ph JOIN User u WHERE idGene = ? AND ph.idUser=u.idUser;');
+			$answerPhylo->execute(array($gene));
 			//Affiche les phylogenies du gène
 			$compteurPhylo=0;
 	        while ($data = $answerPhylo->fetch())
@@ -97,15 +102,15 @@
 				
 				if ($idUser != '' && $idUser == $data['idUser']){
 					$proprietaire='Vous-même';
-					$modif_ou_contact='Modifier? (à venir)</bleu>';
+					$modif_ou_contact='<form action=GeneSheet.php  methode="get"><input type="hidden" name="gene" value='.$gene.'><input type="submit" name="phylo" value="Supprimer"></form>';
 				}
 				else{
 					$proprietaire=$data['alias'];
 					$modif_ou_contact= " <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
 				}
 				
-	        	echo "<TR><TD align=center><a href=".$data['nomFichierArbre']." download>Télécharger</a></TD>
-						<TD align=center><a href=".$data['nomFichierAlignement']."download>Télécharger</a></TD>
+	        	echo "<TR><TD align=center><a href=".$data['nomFichierArbre']."  download>Télécharger</a></TD>
+						<TD align=center><a href=".$data['nomFichierAlignement']." download>Télécharger</a></TD>
 						<TD align=center>".$data['outil']."</TD>
 						<TD>".$data['annotation']."</TD>
 						<TD align=center>".$proprietaire."</TD>
@@ -123,9 +128,18 @@
 			</form>
 	      	<br>
 	        <?php
+	        //Si l'utilisateur supprime sa phylogénie
+			if (isset($_GET['kegg'])){
+				echo "<red>Suppression de l'identifiant KEGG pour ce gène.</red><br>";
+				$suppressionKEGG = $bdd->prepare('DELETE FROM KEGG WHERE idUser=? AND idGene=?;');
+				$suppressionKEGG->execute(array($idUser,$gene));
+			}
 
 			echo '<u>Identifiant(s) KEGG possibles(s) pour ce gène:</u><BR><BR>';
-			//Affiche les phylogenies du le gène
+			//Préparation de la requête sql pour récupérer les identifiant KEGG associés au gènes
+			$answerKEGG = $bdd->prepare('SELECT u.idUser,alias,codeGene,organisme FROM KEGG k JOIN User u WHERE idGene = ? AND k.idUser=u.idUser;');
+			$answerKEGG->execute(array($gene));
+			//Affiche les identifiant KEGG du le gène
 			$compteurKEGG=0;
 	        while ($data = $answerKEGG->fetch())
 	        {
@@ -135,11 +149,11 @@
 				}
 	        	if ($idUser != '' && $idUser == $data['idUser']){
 					$proprietaire='Vous-même';
-					$modif_ou_contact='Modifier? (à venir)</bleu>';
+					$modif_ou_contact='<form action=GeneSheet.php  methode="get"><input type="hidden" name="gene" value='.$gene.'><input type="submit" name="kegg" value="Supprimer"></form>';
 				}
 				else{
 					$proprietaire=$data['alias'];
-					$modif_ou_contact= " <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
+					$modif_ou_contact= "<a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
 				}
 				
 				echo "<TR><TD align=center>".$data['codeGene']."</TD>

@@ -35,14 +35,6 @@
 			//Exécution de la requête avec la protéine en argument
 			$answer->execute(array($prot));
 
-			//Préparation de la requête sql pour récupérer les structures associé à cette proteines 
-			$answerStruc= $bdd->prepare('SELECT u.idUser,alias,nomFichier,annotation FROM Structure s JOIN User u WHERE idProt = ? AND s.idUser=u.idUser;');
-			$answerStruc->execute(array($prot));
-
-			//Préparation de la requête sql pour récupérer les id UniProt associé à cette proteines 
-			$answerUniProt= $bdd->prepare('SELECT u.idUser,alias,codeUniProt FROM UniProt un JOIN User u WHERE idProt = ? AND un.idUser=u.idUser;');
-			$answerUniProt->execute(array($prot));
-
 			//Récupére l'identifiant de l'utilisateur
 			$idUser='';
 			if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
@@ -73,7 +65,19 @@
 			<h1>Données ajoutées par les utilisateurs sur la protéine</h1>
 		<?php
 			echo 'Structure(s) possible(s) pour cette protéine:<BR>';
-			//Affiche les phylogenies du le gène
+			//Si l'utilisateur supprime la structure
+			if (isset($_GET['structure'])){
+				echo "<red>Suppression de votre structure pour cette proteine.</red><br>";
+				$suppressionStruc = $bdd->prepare('DELETE FROM Structure WHERE idUser=? AND idProt=?;');
+				$suppressionStruc->execute(array($idUser,$prot));
+				//Supprime les fichiers associés;
+				unlink('Structure/'.$prot.'/Struc_'.$prot.'_'.$idUser.'.pdb');
+			}
+			//Préparation de la requête sql pour récupérer les structures associé à cette proteines 
+			$answerStruc= $bdd->prepare('SELECT u.idUser,alias,nomFichier,annotation FROM Structure s JOIN User u WHERE idProt = ? AND s.idUser=u.idUser;');
+			$answerStruc->execute(array($prot));
+
+			//Affiche les structures de la proteine
 			$compteurStruc=0;
 	        while ($data = $answerStruc->fetch())
 	        {
@@ -84,14 +88,14 @@
 				
 				if ($idUser != '' && $idUser == $data['idUser']){
 					$proprietaire='Vous-même';
-					$modif_ou_contact='Modifier? (à venir)</bleu>';
+					$modif_ou_contact='<form action=ProtSheet.php  methode="get"><input type="hidden" name="prot" value='.$prot.'><input type="submit" name="structure" value="Supprimer"></form>';
 				}
 				else{
 					$proprietaire=$data['alias'];
 					$modif_ou_contact= "<a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
 				}
 				
-				echo "<TR><TD align=center><a href=".$data['nomFichier']."download>Télécharger</a></TD>
+				echo "<TR><TD align=center><a href=".$data['nomFichier']." download>Télécharger</a></TD>
 						<TD>".$data['annotation']."</TD>
 						<TD align=center>".$proprietaire."</TD>
 						<TD align=center>".$modif_ou_contact."</TD></TR>";
@@ -108,7 +112,18 @@
 		<br>
 		<?php
 			echo 'Identifiant(s) Uniprot possible(s) pour cette protéine:<BR>';
+			//Si l'utilisateur supprime l'identifiant uniProt
+			if (isset($_GET['uniprot'])){
+				echo "<red>Suppression de l'identifant UniProt pour cette proteine.</red><br>";
+				$suppressionStruc = $bdd->prepare('DELETE FROM UniProt WHERE idUser=? AND idProt=?;');
+				$suppressionStruc->execute(array($idUser,$prot));
+			}
+
+			//Préparation de la requête sql pour récupérer les id UniProt associé à cette proteines 
+			$answerUniProt= $bdd->prepare('SELECT u.idUser,alias,codeUniProt FROM UniProt un JOIN User u WHERE idProt = ? AND un.idUser=u.idUser;');
+			$answerUniProt->execute(array($prot));
 			//Affiche les phylogenies du le gène
+
 			$compteurUniProt=0;
 	        while ($data = $answerUniProt->fetch())
 	        {
@@ -118,7 +133,7 @@
 				}
 	        	if ($idUser != '' && $idUser == $data['idUser']){
 					$proprietaire='Vous-même';
-					$modif_ou_contact='Modifier? (à venir)</bleu>';
+					$modif_ou_contact='<form action=ProtSheet.php  methode="get"><input type="hidden" name="prot" value='.$prot.'><input type="submit" name="uniprot" value="Supprimer"></form>';
 				}
 				else{
 					$proprietaire=$data['alias'];
