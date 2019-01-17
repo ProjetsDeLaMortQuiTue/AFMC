@@ -85,22 +85,34 @@
 		</TABLE>
 		<h1>Données ajoutées par les utilisateurs sur le gène</h1>
 		<?php
-			echo 'Phylogenie(s) possible pour ce gène:<BR>';
-			//Affiche les phylogenies du le gène
+			echo '<u>Phylogenie(s) possible pour ce gène:</u><BR><BR>';
+			//Affiche les phylogenies du gène
 			$compteurPhylo=0;
 	        while ($data = $answerPhylo->fetch())
 	        {
 	        	$compteurPhylo++;
-	        	echo "<bleu>Ajouter par: ";
-	        	if ($idUser != '' && $idUser == $data['idUser']){
-					echo "Vous! Modifier? (à venir)</bleu>";
+	        	if ($compteurPhylo == '1'){
+					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#F6A33D\">Arbres</TD><TD align=center bgcolor=\"#F6A33D\">Alignements</TD><TD align=center bgcolor=\"#F6A33D\">Outils</TD><TD width=30% bgcolor=\"#F6A33D\">Annotations</TD><TD align=center bgcolor=\"#F6A33D\">Ajouté par</TD><TD align=center bgcolor=\"#F6A33D\"></TD></TR>";
 				}
-				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
-
-				echo "<TABLE><TR><TD>Arbre:</TD><TD><a href=".$data['nomFichierArbre']." download>Télécharger l'arbre</a></TD></TR>
-				<TR><TD>Alignement:</TD><TD><a href=".$data['nomFichierAlignement']." download>Télécharger l'alignement</a></TD></TR>
-				<TR><TD>Outils:</TD><TD>".$data['outil']."</TD></TR><TR><TD>Annotation:</TD><TD>".$data['annotation']."</TD></TR>";
+				
+				if ($idUser != '' && $idUser == $data['idUser']){
+					$proprietaire='Vous-même';
+					$modif_ou_contact='Modifier? (à venir)</bleu>';
+				}
+				else{
+					$proprietaire=$data['alias'];
+					$modif_ou_contact= " <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
+				}
+				
+	        	echo "<TR><TD align=center><a href=".$data['nomFichierArbre']." download>Télécharger l'arbre</a></TD>
+						<TD align=center><a href=".$data['nomFichierAlignement']."download>Télécharger l'alignement</a></TD>
+						<TD align=center>".$data['outil']."</TD>
+						<TD>".$data['annotation']."</TD>
+						<TD align=center>".$proprietaire."</TD>
+						<TD align=center>".$modif_ou_contact."</TD></TR>";
 				echo "</TABLE>";
+				
+				
 	        }
 	        $answerPhylo->closeCursor();
 	        if ($compteurPhylo==0){echo "Aucune phylogénie n'est disponible pour ce gène";}
@@ -113,20 +125,28 @@
 	      	<br>
 	        <?php
 
-			echo 'Identifiant(s) KEGG possibles pour ce gène:<BR>';
+			echo '<u>Identifiant(s) KEGG possibles pour ce gène:</u><BR><BR>';
 			//Affiche les phylogenies du le gène
 			$compteurKEGG=0;
 	        while ($data = $answerKEGG->fetch())
 	        {
 	        	$compteurKEGG++;
-	        	echo "<bleu>Ajouter par: ";
-	        	if ($idUser != '' && $idUser == $data['idUser']){
-					echo "Vous! Modifier? (à venir)</bleu>";
+	        	if ($compteurKEGG == '1'){
+					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#40919B\">Identifiants KEGG</TD><TD align=center bgcolor=\"#40919B\">Liens</TD><TD align=center bgcolor=\"#40919B\">Ajouté par</TD><TD align=center bgcolor=\"#40919B\"></TD></TR>";
 				}
-				else{echo $data['alias']." <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter l\'utilisateur</a></bleu>';}
-
-				echo "<TABLE><TR><TD>Identifiant KEGG:</TD><TD>".$data['codeGene']."</TD></TR>
-				<TR><TD>Lien:</TD><TD><a href=https://www.genome.jp/dbget-bin/www_bget?".$data['organisme'].":".$data['codeGene'].">Visiter le site KEGG</a></TD></TR>";
+	        	if ($idUser != '' && $idUser == $data['idUser']){
+					$proprietaire='Vous-même';
+					$modif_ou_contact='Modifier? (à venir)</bleu>';
+				}
+				else{
+					$proprietaire=$data['alias'];
+					$modif_ou_contact= " <a href=../user/UserSheet.php?id=".$data['idUser'].'>Contacter</a></bleu>';
+				}
+				
+				echo "<TR><TD align=center>".$data['codeGene']."</TD>
+							<TD align=center><a href=https://www.genome.jp/dbget-bin/www_bget?".$data['organisme'].":".$data['codeGene'].">Visiter le site KEGG</a></TD>
+							<TD align=center>".$proprietaire."</TD>
+							<TD align=center>".$modif_ou_contact."</TD></TR>";
 				echo "</TABLE>";
 	        }
 	        $answerKEGG->closeCursor();
