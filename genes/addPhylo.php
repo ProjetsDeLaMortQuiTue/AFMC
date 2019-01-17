@@ -138,7 +138,6 @@
 				    	<TR><TD>Annotation:</TD><TD><input type="text" name="annotation"></TD></TR>
 						<TR><TD></TD><TD><input type="submit" value="Ajouter une phylogénie" name="submit"></TD></TR></TABLE><br>
 						*Champ obligatoire';
-						echo"<br>Nous vous conseillons le site <a href=http://www.phylogeny.fr>phylogeny.fr</a> pour effectuer votre phylogenie";
 					}
 					else{echo "Vous ne pouvez ajouter qu'une seule phylogénie par gène.";}
 				}
