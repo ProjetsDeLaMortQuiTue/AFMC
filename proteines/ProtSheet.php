@@ -26,15 +26,12 @@
 		<!-- Contenu de la page -->
 		<section>
 		<?php
-
 			//Connexion à la base de donnée
 			include("../DatabaseConnection.php");
-
 			//Préparation de la requête sql pour récupérer les informations de la protéine
 			$answer = $bdd->prepare('SELECT idProt,nomProt,tailleProt,seqProt,idGene FROM Proteine WHERE idProt = ?');
 			//Exécution de la requête avec la protéine en argument
 			$answer->execute(array($prot));
-
 			//Récupére l'identifiant de l'utilisateur
 			$idUser='';
 			if ((isset($_SESSION['user'])) && ($_SESSION['user'] != '')){
@@ -42,10 +39,8 @@
 				$answerUser->execute(array($_SESSION['user']));
 				while ($data = $answerUser->fetch()){$idUser=$data['idUser'];}
 			}
-
 			echo "<h1>Données présentes pour la protéine ".$prot."</h1>";
 		    echo"<TABLE>";
-
 	        //Affiche les résultats de la requête dans un tableau
 	        while ($data = $answer->fetch())
 	        {
@@ -76,14 +71,13 @@
 			//Préparation de la requête sql pour récupérer les structures associé à cette proteines 
 			$answerStruc= $bdd->prepare('SELECT u.idUser,alias,nomFichier,annotation FROM Structure s JOIN User u WHERE idProt = ? AND s.idUser=u.idUser;');
 			$answerStruc->execute(array($prot));
-
 			//Affiche les structures de la proteine
 			$compteurStruc=0;
 	        while ($data = $answerStruc->fetch())
 	        {
 	        	$compteurStruc++;
 	        	if ($compteurStruc == '1'){
-					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#F6A33D\">Fichiers Structure</TD><TD align=center bgcolor=\"#F6A33D\">Alignements</TD></TD><TD align=center bgcolor=\"#F6A33D\">Ajoutés par</TD><TD align=center bgcolor=\"#F6A33D\"></TD></TR>";
+					echo "<TABLE BORDER = \"1\" cellspacing=\"0\"><TR><TD align=center bgcolor=\"#F6A33D\">Fichiers Structure</TD><TD align=center bgcolor=\"#F6A33D\">Annotations</TD></TD><TD align=center bgcolor=\"#F6A33D\">Ajoutés par</TD><TD align=center bgcolor=\"#F6A33D\"></TD></TR>";
 				}
 				
 				if ($idUser != '' && $idUser == $data['idUser']){
@@ -118,12 +112,10 @@
 				$suppressionStruc = $bdd->prepare('DELETE FROM UniProt WHERE idUser=? AND idProt=?;');
 				$suppressionStruc->execute(array($idUser,$prot));
 			}
-
 			//Préparation de la requête sql pour récupérer les id UniProt associé à cette proteines 
 			$answerUniProt= $bdd->prepare('SELECT u.idUser,alias,codeUniProt FROM UniProt un JOIN User u WHERE idProt = ? AND un.idUser=u.idUser;');
 			$answerUniProt->execute(array($prot));
 			//Affiche les phylogenies du le gène
-
 			$compteurUniProt=0;
 	        while ($data = $answerUniProt->fetch())
 	        {
