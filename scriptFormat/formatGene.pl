@@ -44,16 +44,26 @@ while (<IN1>)
 
         $seq="";
         $compteur++;
+		#Création des fichiers fasta
+		if ($compteur != 0){
+			close OUT2;
+		}
+		open(OUT2, ">../genes/Fasta/".$id.".fasta");
+		print OUT2 $_."\n";
+		
     }
     else
     {
     	#Récupére la sequence
         $seq.=$_;
+		print OUT2 $_."\n";
     }
 }
 
-#Ajoute la dernière sequence
+#Ajoute la dernière sequence au hash
 $hashGene{$id}{"seq"}=$seq;
+
+close OUT2;
 close IN1;
 print "Le nombre de gene est de: $compteur\n";
 
@@ -138,17 +148,25 @@ if ($erreurNomProtGene != 0){
 #print "\n";
 
 #Fichier de sortie
-open(OUT, ">../botrytis_cinerea/gene.csv");
+open(OUT1, ">../botrytis_cinerea/gene.csv");
 
 
 #Ecrit les informations dans le fichiers de sortie au bon format
 foreach $id (@listeGeneCommun){
-	print OUT "\"".$id."\";\"".
+	print OUT1 "\"".$id."\";\"".
 	$hashGene{$id}{"nomProtGene"}."\";".
 	$hashGene{$id}{"taille"}.";".
 	$hashGene{$id}{"start"}.";".
     $hashGene{$id}{"stop"}.";\"".
     $hashGene{$id}{"brin"}."\";".
     $hashGene{$id}{"chromosome"}.";\"".
-	$hashGene{$id}{"seq"}."\";1\n";
+	$hashGene{$id}{"seq"}."\";".
+	$id.".fasta;1\n";
 }
+close OUT1;
+
+
+
+
+
+
