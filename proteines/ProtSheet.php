@@ -51,7 +51,7 @@
 				while ($data = $answerUser->fetch()){$idUser=$data['idUser'];}
 			}
 
-			echo "<h1>Données présentent pour la proteines ".$prot."</h1>";
+			echo "<h1>Données présentes pour la protéine ".$prot."</h1>";
 		    echo"<TABLE>";
 
 	        //Affiche les résultats de la requête dans un tableau
@@ -72,7 +72,7 @@
 		?>
 			<h1>Données ajoutées par les utilisateurs sur la protéine</h1>
 		<?php
-			echo 'Structure(s) possible pour cette protéine:<BR>';
+			echo 'Structure(s) possible(s) pour cette protéine:<BR>';
 			//Affiche les phylogenies du le gène
 			$compteurStruc=0;
 	        while ($data = $answerStruc->fetch())
@@ -98,7 +98,7 @@
 	        }
 	        echo "</TABLE>";
 	        $answerStruc->closeCursor();
-	        if ($compteurStruc==0){echo "Aucune structure n'est disponible pour cette proteine";}
+	        if ($compteurStruc==0){echo "Aucune structure n'est disponible pour cette protéine";}
 			
 		?>
 		<form action=addStructure.php method="GET">
@@ -107,7 +107,7 @@
 		</form>
 		<br>
 		<?php
-			echo 'Identifiant(s) Uniprot possible pour cette protéine:<BR>';
+			echo 'Identifiant(s) Uniprot possible(s) pour cette protéine:<BR>';
 			//Affiche les phylogenies du le gène
 			$compteurUniProt=0;
 	        while ($data = $answerUniProt->fetch())
@@ -132,7 +132,7 @@
 	        }
 	        echo "</TABLE>";
 	        $answerUniProt->closeCursor();
-	        if ($compteurUniProt==0){echo "Aucun identifant UniProt n'est disponible pour cette proteine";}
+	        if ($compteurUniProt==0){echo "Aucun identifant UniProt n'est disponible pour cette protéine";}
 			
 		?>
 		<form action=addUniProt.php method="GET">
