@@ -23,7 +23,7 @@
 
 			//GENE ENTIEREMENT ANNOTE
 			//Requête sql pour récupérer tous les gènes qui sont annotés
-			$answerGenesAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph JOIN KEGG k WHERE idEsp= ? AND g.idGene=ph.idGene AND g.idGene=k.idGene');
+			$answerGenesAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph WHERE idEsp= ? AND g.idGene=ph.idGene');
 			$answerGenesAnnoté->execute(array($_SESSION['idOrga']));
 
 			//Récupére les gènes entirement annoté dans une liste
@@ -41,7 +41,7 @@
 			}
 
 			//Requête sql pour récupérer les gènes qui sont annotés en partie
-			$answerGenesEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph JOIN KEGG k WHERE idEsp=? AND (g.idGene=ph.idGene OR g.idGene=k.idGene)'.$SQLGeneAnnote.';');
+			$answerGenesEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph WHERE idEsp=? AND (g.idGene=ph.idGene)'.$SQLGeneAnnote.';');
 			$answerGenesEnPartieAnnoté->execute(array_merge(array($_SESSION['idOrga']),$genesAnnoté));
 
 			//Récupére les gènes en partie annoté dans une liste
@@ -85,13 +85,13 @@
 			<input type="submit" value="Faire une recherche plus détaillé">
 		</form>
 		<br>
-		 Nombre de gènes non annotés: <? echo $nbGenesNonAnnoté ?> <br>
+		 Nombre de gènes non-annotés: <? echo $nbGenesNonAnnoté ?> <br>
 		 Nombre de gènes partiellement annotés: <? echo $nbGenesEnPartieAnnoté ?> <br>
-		 Nombre de gènes non annotés: <? echo $nbGenesAnnoté ?> <br>
+		 Nombre de gènes annotés: <? echo $nbGenesAnnoté ?> <br>
 		 <br>
 		<!-- AFFICHAGE DES GENES DANS LE TABLEAU -->
-		<TABLE BORDER="1" style="text-align:center">
-		<TR><TD>Gènes non annotés</TD><TD>Gènes partiellement annotés</TD><TD>Gènes entièrement annotés</TD></TR>
+		<TABLE BORDER="1" style="text-align:center" cellspacing="0">
+		<TR><TD bgcolor="#81CCB8">Gènes non-annotés</TD><TD bgcolor="#81CCB8">Gènes partiellement annotés</TD><TD bgcolor="#81CCB8">Gènes entièrement annotés</TD></TR>
 		<?php
 			for($i=0; $i<max($nbGenesAnnoté,$nbGenesEnPartieAnnoté,$nbGenesNonAnnoté) ; $i++){
 				echo "<TR>";
