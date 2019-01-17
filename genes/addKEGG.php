@@ -55,14 +55,13 @@
 				//Connexion à la base de donnée
 				include("../DatabaseConnection.php");
 				//Vérifie que l'utilisateur n'a pas déja entré une phylogénie pour ce gène
-				$alreadyAddedKEGG= $bdd->prepare('SELECT count(*) FROM User u JOIN Phylogenie ph WHERE u.idUser=ph.idUser AND ph.idGene=? AND u.idUser=?');
+				$alreadyAddedKEGG= $bdd->prepare('SELECT count(*) FROM User u JOIN KEGG k WHERE u.idUser=k.idUser AND k.idGene=? AND u.idUser=?');
 				$alreadyAddedKEGG->execute(array($gene,$idUser));
 				while ($data = $alreadyAddedKEGG->fetch())
 	    		{
 	    			if ($data['count(*)'] == 0){
 						echo "<h1>Ajout d'un identifiant KEGG pour le gène ".$gene."</h1>";
 				    	echo '<TABLE><red>'.$erreur."</red>";
-				    	//AJOUT DU FICHIER
 				    	echo '<form action="addKEGG.php?gene='.$gene.'" method="post" enctype="multipart/form-data">';
 				    	echo '<TR><TD>*ID gènes:</TD><TD><input type="text" name="codeGene"></TD></TR>
 				    	<TR><TD>*ID organisme (3 lettre):</TD><TD><input type="text" name="organisme"></TD></TR>
