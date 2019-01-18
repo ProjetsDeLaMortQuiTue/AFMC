@@ -133,7 +133,7 @@
 				}
 				
 				echo "<TR><TD align=center>".$data['codeUniProt']."</TD>
-							<TD align=center><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt'].">UniProt</a></TD>
+							<TD align=center><a href=https://www.uniprot.org/uniprot/".$data['codeUniProt']." target=\"_blank\">UniProt</a></TD>
 							<TD align=center>".$proprietaire."</TD>
 							<TD align=center>".$modif_ou_contact."</TD></TR>";
 	        }
