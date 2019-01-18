@@ -21,7 +21,7 @@
 
 			//PROTEINE ENTIEREMENT ANNOTE
 			//Requête sql pour récupérer tous les proteines qui sont annotés
-			$answerProtsAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN PathwayReaction pr JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND p.idProt=pr.idProt AND p.idProt=s.idProt');
+			$answerProtsAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN UniProt pr JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND p.idProt=pr.idProt AND p.idProt=s.idProt');
 			$answerProtsAnnoté->execute(array($_SESSION['idOrga']));
 			
 			//Récupére les proetines entirement annoté dans une liste
@@ -39,7 +39,7 @@
 			}
 
 			//Requête sql pour récupérer les proteines qui sont annotés en partie
-			$answerProtsEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN PathwayReaction pr JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND (p.idProt=pr.idProt OR p.idProt=s.idProt)'.$SQLProtsAnnote.';');
+			$answerProtsEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT p.idProt FROM Proteine p JOIN Gene g JOIN UniProt pr JOIN Structure s WHERE g.idGene=p.idGene AND idEsp= ? AND (p.idProt=pr.idProt OR p.idProt=s.idProt)'.$SQLProtsAnnote.';');
 			$answerProtsEnPartieAnnoté->execute(array_merge(array($_SESSION['idOrga']),$protsAnnoté));
 
 			//Récupére les proteines en partie annoté dans une liste

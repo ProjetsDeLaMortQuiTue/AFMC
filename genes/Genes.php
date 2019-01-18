@@ -23,7 +23,7 @@
 
 			//GENE ENTIEREMENT ANNOTE
 			//Requête sql pour récupérer tous les gènes qui sont annotés
-			$answerGenesAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph WHERE idEsp= ? AND g.idGene=ph.idGene');
+			$answerGenesAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph JOIN KEGG k WHERE idEsp= ? AND g.idGene=ph.idGene AND g.idGene=k.idGene');
 			$answerGenesAnnoté->execute(array($_SESSION['idOrga']));
 
 			//Récupére les gènes entirement annoté dans une liste
@@ -41,7 +41,7 @@
 			}
 
 			//Requête sql pour récupérer les gènes qui sont annotés en partie
-			$answerGenesEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph WHERE idEsp=? AND (g.idGene=ph.idGene)'.$SQLGeneAnnote.';');
+			$answerGenesEnPartieAnnoté = $bdd->prepare('SELECT DISTINCT g.idGene FROM Gene g JOIN Phylogenie ph JOIN KEGG k WHERE idEsp=? AND (g.idGene=ph.idGene OR g.idGene=k.idGene)'.$SQLGeneAnnote.';');
 			$answerGenesEnPartieAnnoté->execute(array_merge(array($_SESSION['idOrga']),$genesAnnoté));
 
 			//Récupére les gènes en partie annoté dans une liste
